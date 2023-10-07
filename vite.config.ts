@@ -1,9 +1,6 @@
 import { defineConfig, loadEnv, type UserConfig } from 'vite'
 import { join } from 'path'
 import vue from '@vitejs/plugin-vue'
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
-import { ArcoResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default ({ mode }): UserConfig => {
@@ -11,17 +8,7 @@ export default ({ mode }): UserConfig => {
 
   return defineConfig({
     plugins: [
-      vue(),
-      AutoImport({
-        resolvers: [ArcoResolver()]
-      }),
-      Components({
-        resolvers: [
-          ArcoResolver({
-            sideEffect: true
-          })
-        ]
-      })
+      vue()
     ],
     server: {
       proxy: {
