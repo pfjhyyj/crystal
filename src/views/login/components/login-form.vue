@@ -65,7 +65,7 @@
 
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
-// import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { Message } from '@arco-design/web-vue'
 import { type ValidatedError } from '@arco-design/web-vue/es/form/interface'
 import { useStorage } from '@vueuse/core'
@@ -73,7 +73,7 @@ import { useStorage } from '@vueuse/core'
 import useLoading from '@/hooks/loading'
 // import type { LoginData } from '@/api/user'
 //
-// const router = useRouter()
+const router = useRouter()
 const errorMessage = ref('')
 const { loading, setLoading } = useLoading()
 // const userStore = useUserStore()
@@ -102,13 +102,13 @@ const handleSubmit = async ({
   setLoading(true)
   try {
     // await userStore.login(values as LoginData)
-    // const { redirect, ...othersQuery } = router.currentRoute.value.query
-    // router.push({
-    //   name: (redirect as string) || 'Workplace',
-    //   query: {
-    //     ...othersQuery
-    //   }
-    // })
+    const { redirect, ...othersQuery } = router.currentRoute.value.query
+    void router.push({
+      name: redirect as string ?? 'Workplace',
+      query: {
+        ...othersQuery
+      }
+    })
     Message.success('欢迎使用')
     const { rememberPassword } = loginConfig.value
     const { username, password } = values
