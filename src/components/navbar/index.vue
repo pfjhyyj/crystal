@@ -229,7 +229,7 @@ const switchRoles = async () => {
 const toggleDrawerMenu = inject('toggleDrawerMenu') as () => void
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
   .navbar {
     display: flex;
     justify-content: space-between;
@@ -281,7 +281,7 @@ const toggleDrawerMenu = inject('toggleDrawerMenu') as () => void
   }
 </style>
 
-<style lang="less">
+<style lang="scss">
   .message-popover {
     .arco-popover-content {
       margin-top: 0;

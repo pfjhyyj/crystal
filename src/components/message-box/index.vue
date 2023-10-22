@@ -102,7 +102,7 @@ const emptyList = () => {
 void fetchSourceData()
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
   :deep(.arco-popover-popup-content) {
     padding: 0;
   }

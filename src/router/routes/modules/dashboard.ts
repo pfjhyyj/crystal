@@ -6,7 +6,7 @@ const DASHBOARD: AppRouteRecordRaw = {
   name: 'dashboard',
   component: DEFAULT_LAYOUT,
   meta: {
-    locale: 'menu.dashboard',
+    locale: '工作台',
     requiresAuth: true,
     icon: 'icon-dashboard',
     order: 0
