@@ -7,7 +7,7 @@ import { appRoutes } from '../routes'
 import { WHITE_LIST, NOT_FOUND } from '../constants'
 
 export default function setupPermissionGuard (router: Router) {
-  router.beforeEach(async (to, from, next) => {
+  router.beforeEach(async (to, _from, next) => {
     const appStore = useAppStore()
     const userStore = useUserStore()
     const Permission = usePermission()
@@ -20,7 +20,7 @@ export default function setupPermissionGuard (router: Router) {
       // Refine the permission logic from the server's menu configuration as needed
       if (
         (appStore.appAsyncMenus.length === 0) &&
-        !WHITE_LIST.find((el) => el.name === to.name)
+        (WHITE_LIST.find((el) => el.name === to.name) == null)
       ) {
         await appStore.fetchServerMenuConfig()
       }
@@ -31,7 +31,7 @@ export default function setupPermissionGuard (router: Router) {
         const element = serverMenuConfig.shift()
         if (element?.name === to.name) exist = true
 
-        if (element?.children) {
+        if (element?.children !== undefined) {
           serverMenuConfig.push(
             ...(element.children as unknown as RouteRecordNormalized[])
           )
@@ -45,7 +45,7 @@ export default function setupPermissionGuard (router: Router) {
       if (permissionsAllow) next()
       else {
         const destination =
-          Permission.findFirstPermissionRoute(appRoutes, userStore.role) ||
+          Permission.findFirstPermissionRoute(appRoutes, userStore.role) ??
           NOT_FOUND
         next(destination)
       }

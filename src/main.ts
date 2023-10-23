@@ -8,6 +8,8 @@ import ArcoVue from '@arco-design/web-vue'
 import ArcoVueIcon from '@arco-design/web-vue/es/icon'
 import router from '@/router'
 
+import './mock'
+
 const app = createApp(App)
 const pinia = createPinia()
 app.use(ArcoVue, {})

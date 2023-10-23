@@ -73,7 +73,7 @@ export default defineComponent({
       }
       // Eliminate external link side effects
       const { hideInMenu, activeMenu } = item.meta as RouteMeta
-      if (route.name === item.name && !hideInMenu && !activeMenu) {
+      if (route.name === item.name && !(hideInMenu ?? false) && (activeMenu ?? '') === '') {
         selectedKey.value = [item.name as string]
         return
       }
@@ -91,7 +91,7 @@ export default defineComponent({
           result.push(...keys)
           return
         }
-        if (item.children?.length) {
+        if ((item.children?.length) != null && item.children.length > 0) {
           item.children.forEach((el) => {
             backtrack(el, [...keys, el.name as string])
           })
@@ -104,18 +104,17 @@ export default defineComponent({
       return result
     }
     listenerRouteChange((newRoute) => {
-      console.log(newRoute)
       const { requiresAuth, activeMenu, hideInMenu } = newRoute.meta
-      if (requiresAuth && (!hideInMenu || activeMenu)) {
+      if (requiresAuth && (!(hideInMenu ?? false) || (activeMenu ?? '') !== '')) {
         const menuOpenKeys = findMenuOpenKeys(
-          (activeMenu || newRoute.name) as string
+          (activeMenu ?? newRoute.name) as string
         )
 
         const keySet = new Set([...menuOpenKeys, ...openKeys.value])
         openKeys.value = [...keySet]
 
         selectedKey.value = [
-          activeMenu || menuOpenKeys[menuOpenKeys.length - 1]
+          activeMenu ?? menuOpenKeys[menuOpenKeys.length - 1]
         ]
       }
     }, true)

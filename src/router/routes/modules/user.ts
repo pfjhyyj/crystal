@@ -8,12 +8,12 @@ const DASHBOARD: AppRouteRecordRaw = {
   meta: {
     locale: '用户管理',
     requiresAuth: true,
-    icon: 'icon-dashboard',
+    icon: 'icon-user',
     order: 0
   },
   children: [
     {
-      path: 'workplace',
+      path: 'manage',
       name: 'UserManage',
       component: async () => await import('@/views/dashboard/workplace/index.vue'),
       meta: {

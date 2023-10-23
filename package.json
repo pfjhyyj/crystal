@@ -23,6 +23,7 @@
   "devDependencies": {
     "@arco-design/web-vue": "^2.52.0",
     "@types/lodash": "^4.14.199",
+    "@types/mockjs": "^1.0.9",
     "@types/node": "^20.8.3",
     "@types/nprogress": "^0.2.1",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
@@ -33,6 +34,7 @@
     "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-vue": "^9.17.0",
+    "mockjs": "^1.1.0",
     "typescript": "^5.0.2",
     "unplugin-auto-import": "^0.16.6",
     "unplugin-vue-components": "^0.25.2",

@@ -19,7 +19,7 @@ request.interceptors.response.use(response => {
   if (response.status !== 200) {
     return Promise.reject(data)
   }
-  if (data.msg !== '') {
+  if (data.code !== 20000) {
     Message.error({
       content: data.msg
     })

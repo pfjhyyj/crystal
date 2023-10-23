@@ -5,11 +5,11 @@ import { useUserStore } from '@/store'
 import { isLogin } from '@/utils/auth'
 
 export default function setupUserLoginInfoGuard (router: Router) {
-  router.beforeEach(async (to, from, next) => {
+  router.beforeEach(async (to, _from, next) => {
     NProgress.start()
     const userStore = useUserStore()
     if (isLogin()) {
-      if (userStore.role) {
+      if (userStore.role !== undefined) {
         next()
       } else {
         try {
@@ -17,12 +17,13 @@ export default function setupUserLoginInfoGuard (router: Router) {
           next()
         } catch (error) {
           await userStore.logout()
+          const query: LocationQueryRaw = {
+            redirect: to.name as string,
+            ...to.query
+          }
           next({
             name: 'login',
-            query: {
-              redirect: to.name,
-              ...to.query
-            } as LocationQueryRaw
+            query
           })
         }
       }
@@ -31,12 +32,13 @@ export default function setupUserLoginInfoGuard (router: Router) {
         next()
         return
       }
+      const query: LocationQueryRaw = {
+        redirect: to.name as string,
+        ...to.query
+      }
       next({
         name: 'login',
-        query: {
-          redirect: to.name,
-          ...to.query
-        } as LocationQueryRaw
+        query
       })
     }
   })

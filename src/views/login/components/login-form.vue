@@ -69,15 +69,15 @@ import { useRouter } from 'vue-router'
 import { Message } from '@arco-design/web-vue'
 import { type ValidatedError } from '@arco-design/web-vue/es/form/interface'
 import { useStorage } from '@vueuse/core'
-// import { useUserStore } from '@/store'
+import { useUserStore } from '@/store'
 import useLoading from '@/hooks/loading'
-// import type { LoginData } from '@/api/user'
-//
+import type { LoginData } from '@/api/user'
+
 const router = useRouter()
 const errorMessage = ref('')
 const { loading, setLoading } = useLoading()
-// const userStore = useUserStore()
-//
+const userStore = useUserStore()
+
 const loginConfig = useStorage('login_backup-config', {
   rememberPassword: true,
   username: 'admin', // 演示默认值
@@ -101,7 +101,7 @@ const handleSubmit = async ({
   }
   setLoading(true)
   try {
-    // await userStore.login(values as LoginData)
+    await userStore.login(values as LoginData)
     const { redirect, ...othersQuery } = router.currentRoute.value.query
     void router.push({
       name: redirect as string ?? 'Workplace',
