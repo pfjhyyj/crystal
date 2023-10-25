@@ -14,7 +14,7 @@ export type MessageListType = MessageRecord[]
 
 export async function queryMessageList (): Promise<MessageListType> {
   return await request({
-    url: '/api/v1/sys/menu',
+    url: '/api/message/list',
     method: 'get'
   })
 }

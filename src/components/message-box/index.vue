@@ -61,8 +61,7 @@ const tabList: TabItem[] = [
 async function fetchSourceData () {
   setLoading(true)
   try {
-    const { data } = await queryMessageList()
-    messageData.messageList = data
+    messageData.messageList = await queryMessageList()
   } catch (err) {
     // you can report use errorHandler or other
   } finally {

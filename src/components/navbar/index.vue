@@ -93,20 +93,6 @@
         </a-tooltip>
       </li>
       <li>
-        <a-tooltip content="页面配置">
-          <a-button
-            class="nav-btn"
-            type="outline"
-            :shape="'circle'"
-            @click="setVisible"
-          >
-            <template #icon>
-              <icon-settings />
-            </template>
-          </a-button>
-        </a-tooltip>
-      </li>
-      <li>
         <a-dropdown trigger="click">
           <a-avatar
             :size="32"
@@ -189,11 +175,7 @@ const toggleTheme = useToggle(isDark)
 const handleToggleTheme = () => {
   toggleTheme()
 }
-const setVisible = () => {
-  appStore.updateSettings({ globalSettings: true })
-}
 const refBtn = ref()
-const triggerBtn = ref()
 const setPopoverVisible = () => {
   const event = new MouseEvent('click', {
     view: window,
@@ -204,14 +186,6 @@ const setPopoverVisible = () => {
 }
 const handleLogout = () => {
   void logout()
-}
-const setDropDownVisible = () => {
-  const event = new MouseEvent('click', {
-    view: window,
-    bubbles: true,
-    cancelable: true
-  })
-  triggerBtn.value.dispatchEvent(event)
 }
 const switchRoles = async () => {
   const res = await userStore.switchRoles()
