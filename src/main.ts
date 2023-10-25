@@ -7,6 +7,7 @@ import '@arco-design/web-vue/dist/arco.css'
 import ArcoVue from '@arco-design/web-vue'
 import ArcoVueIcon from '@arco-design/web-vue/es/icon'
 import router from '@/router'
+import directive from '@/directive'
 
 import './mock'
 
@@ -17,4 +18,6 @@ app.use(ArcoVueIcon)
 
 app.use(pinia)
 app.use(router)
+app.use(directive)
+
 app.mount('#app')
