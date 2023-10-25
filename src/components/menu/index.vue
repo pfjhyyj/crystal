@@ -48,7 +48,6 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const { menuTree } = useMenuTree()
-    console.log(menuTree.value)
 
     const collapsed = computed({
       get () {

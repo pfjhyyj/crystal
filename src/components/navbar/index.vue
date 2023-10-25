@@ -24,15 +24,6 @@
     </div>
     <ul class="right-side">
       <li>
-        <a-tooltip content="搜索">
-          <a-button class="nav-btn" type="outline" :shape="'circle'">
-            <template #icon>
-              <icon-search />
-            </template>
-          </a-button>
-        </a-tooltip>
-      </li>
-      <li>
         <a-tooltip
           :content="
             theme === 'light'
