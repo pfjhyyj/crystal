@@ -1,16 +1,14 @@
 <template>
   <router-view v-slot="{ Component, route }">
     <transition name="fade" mode="out-in" appear>
-      <div class="page">
-        <component
-            :is="Component"
-            v-if="route.meta.ignoreCache"
-            :key="route.fullPath"
-        />
-        <keep-alive v-else :include="cacheList">
-          <component :is="Component" :key="route.fullPath" />
-        </keep-alive>
-      </div>
+      <component
+          :is="Component"
+          v-if="route.meta.ignoreCache"
+          :key="route.fullPath"
+      />
+      <keep-alive v-else :include="cacheList">
+        <component :is="Component" :key="route.fullPath" />
+      </keep-alive>
     </transition>
   </router-view>
 </template>
@@ -24,4 +22,6 @@ const tabBarStore = useTabBarStore()
 const cacheList = computed(() => tabBarStore.getCacheList)
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+
+</style>
