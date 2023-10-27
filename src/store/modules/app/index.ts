@@ -1,8 +1,8 @@
-import { defineStore } from 'pinia'
-import { Notification } from '@arco-design/web-vue'
-import type { RouteRecordNormalized } from 'vue-router'
-import { getMenuList } from '@/api/user'
-import { type AppState } from './types'
+import {defineStore} from 'pinia'
+import {Notification} from '@arco-design/web-vue'
+import type {RouteRecordNormalized} from 'vue-router'
+import {getMenuList} from '@/api/user'
+import {type AppState} from './types'
 
 const useAppStore = defineStore('app', {
   state: (): AppState => ({
@@ -65,8 +65,7 @@ const useAppStore = defineStore('app', {
           content: 'loading',
           closable: true
         })
-        const { data } = await getMenuList()
-        this.serverMenu = data
+        this.serverMenu = await getMenuList()
         Notification.success({
           id: 'menuNotice',
           content: 'success',

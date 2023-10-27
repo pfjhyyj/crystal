@@ -11,31 +11,18 @@ export interface LoginRes {
   token: string
 }
 
-export async function login (data: LoginData): Promise<LoginRes> {
-  return await request({
-    url: '/api/user/login',
-    method: 'post',
-    data
-  })
+export async function login (data: LoginData) {
+  return await request.post<LoginRes>('/api/user/login', data)
 }
 
-export async function logout (): Promise<LoginRes> {
-  return await request({
-    url: '/api/user/logout',
-    method: 'post'
-  })
+export async function logout () {
+  return await request.post<LoginRes>('/api/user/logout')
 }
 
-export async function getUserInfo (): Promise<UserState> {
-  return await request({
-    url: '/api/user/info',
-    method: 'post'
-  })
+export async function getUserInfo () {
+  return await request.post<UserState>('/api/user/info')
 }
 
-export async function getMenuList (): Promise<RouteRecordNormalized[]> {
-  return await request({
-    url: '/api/v1/sys/menu',
-    method: 'get'
-  })
+export async function getMenuList () {
+  return await request.get<RouteRecordNormalized[]>('/api/user/menu')
 }
