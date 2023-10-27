@@ -3,6 +3,7 @@ import NProgress from 'nprogress'
 
 import { appRoutes } from './routes'
 import createRouteGuard from '@/router/guard'
+import { NOT_FOUND_ROUTE, REDIRECT_MAIN } from '@/router/routes/base.ts'
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const router: Router = createRouter({
@@ -20,8 +21,13 @@ const router: Router = createRouter({
         requiresAuth: false
       }
     },
-    ...appRoutes
-  ]
+    ...appRoutes,
+    REDIRECT_MAIN,
+    NOT_FOUND_ROUTE
+  ],
+  scrollBehavior () {
+    return { top: 0 }
+  }
 })
 
 createRouteGuard(router)

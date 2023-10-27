@@ -1,32 +1,7 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import { Message } from '@arco-design/web-vue'
 import { type ApiResponse } from '@/api/type'
-
-// const request = axios.create({
-//   // timeout: 5000
-// })
-//
-// request.interceptors.request.use(config => {
-//   const token = localStorage.getItem('token')
-//   if (token != null) {
-//     config.headers.Authorization = `Bearer ${token}`
-//   }
-//   return config
-// })
-//
-// request.interceptors.response.use(response => {
-//   const data: ApiResponse<any> = response.data
-//   if (response.status !== 200) {
-//     return Promise.reject(data)
-//   }
-//   if (data.code !== 20000) {
-//     Message.error({
-//       content: data.msg
-//     })
-//     return Promise.reject(data.msg)
-//   }
-//   return data.data
-// })
+import { getToken } from '@/utils/auth.ts'
 
 class Request {
   private readonly axiosInstance: AxiosInstance
@@ -34,7 +9,7 @@ class Request {
   constructor (config: AxiosRequestConfig) {
     this.axiosInstance = axios.create(config)
     this.axiosInstance.interceptors.request.use(config => {
-      const token = localStorage.getItem('token')
+      const token = getToken()
       if (token != null) {
         config.headers.Authorization = `Bearer ${token}`
       }
