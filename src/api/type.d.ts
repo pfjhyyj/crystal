@@ -4,6 +4,11 @@ export interface ApiResponse<T> {
   msg: string
 }
 
+export interface PageRequest {
+  current: number
+  pageSize: number
+}
+
 export interface PageResponse<T> extends ApiResponse<T> {
   current: number
   pageSize: number
