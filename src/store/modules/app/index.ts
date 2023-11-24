@@ -18,7 +18,7 @@ const useAppStore = defineStore('app', {
     menuWidth: 220,
     globalSettings: false,
     device: 'desktop',
-    tabBar: false,
+    tabBar: true,
     menuFromServer: false,
     serverMenu: []
   }),
