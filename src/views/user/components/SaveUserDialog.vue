@@ -1,3 +1,59 @@
+<template>
+  <div class="dialog">
+    <a-modal v-model:visible="visible" :title="editMode ? '编辑员工' : '新建员工'" @cancel="handleCancel" @before-ok="handleBeforeOk">
+      <a-form :model="form">
+        <a-form-item
+          field="tenantId"
+          label="所属租户"
+          :rules="[{required:true,message:'请选择所属租户'}]"
+        >
+          <a-select v-model="form.tenantId" placeholder="请选择所属租户">
+            <a-option v-for="tenant in tenants" :key="tenant.id" :value="tenant.id">{{ tenant.name }}</a-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item
+          field="nickname"
+          label="用户昵称"
+          :rules="[{required:true,message:'请输入用户昵称'}]"
+          :validate-trigger="['change','input']"
+        >
+          <a-input v-model="form.nickname" :max-length="20" />
+        </a-form-item>
+        <a-form-item
+          field="username"
+          label="用户名"
+          :rules="[{required:true,message:'请输入用户名'}]"
+          :validate-trigger="['change','input']"
+        >
+          <a-input v-model="form.username" :max-length="20" />
+        </a-form-item>
+        <a-form-item
+          field="email"
+          label="电子邮箱"
+          :rules="[{type:'email',message:'请输入正确的电子邮箱'}]"
+          :validate-trigger="['change','input']"
+        >
+          <a-input v-model="form.email" :max-length="20" />
+        </a-form-item>
+        <a-form-item
+          field="phone"
+          label="手机号"
+          :rules="[{required:true,message:'请输入手机号'}, {match: /^1[3456789]\d{9}$/, message: '请输入正确的手机号'}]"
+          :validate-trigger="['change','input']"
+        >
+          <a-input v-model="form.phone" :max-length="11" />
+        </a-form-item>
+        <a-form-item field="status" label="状态">
+          <a-select v-model="form.status">
+            <a-option :value="UserStatus.ENABLE">启用</a-option>
+            <a-option :value="UserStatus.DISABLE">禁用</a-option>
+          </a-select>
+        </a-form-item>
+      </a-form>
+    </a-modal>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { Message } from '@arco-design/web-vue'
@@ -114,61 +170,11 @@ defineExpose({
 })
 </script>
 
-<template>
-  <div class="dialog">
-    <a-modal v-model:visible="visible" :title="editMode ? '编辑员工' : '新建员工'" @cancel="handleCancel" @before-ok="handleBeforeOk">
-      <a-form :model="form">
-        <a-form-item
-          field="tenantId"
-          label="所属租户"
-          :rules="[{required:true,message:'请选择所属租户'}]"
-        >
-          <a-select v-model="form.tenantId" placeholder="请选择所属租户">
-            <a-option v-for="tenant in tenants" :key="tenant.id" :value="tenant.id">{{ tenant.name }}</a-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item
-          field="nickname"
-          label="用户昵称"
-          :rules="[{required:true,message:'请输入用户昵称'}]"
-          :validate-trigger="['change','input']"
-        >
-          <a-input v-model="form.nickname" :max-length="20" />
-        </a-form-item>
-        <a-form-item
-          field="username"
-          label="用户名"
-          :rules="[{required:true,message:'请输入用户名'}]"
-          :validate-trigger="['change','input']"
-        >
-          <a-input v-model="form.username" :max-length="20" />
-        </a-form-item>
-        <a-form-item
-          field="email"
-          label="电子邮箱"
-          :rules="[{type:'email',message:'请输入正确的电子邮箱'}]"
-          :validate-trigger="['change','input']"
-        >
-          <a-input v-model="form.email" :max-length="20" />
-        </a-form-item>
-        <a-form-item
-          field="phone"
-          label="手机号"
-          :rules="[{required:true,message:'请输入手机号'}, {match: /^1[3456789]\d{9}$/, message: '请输入正确的手机号'}]"
-          :validate-trigger="['change','input']"
-        >
-          <a-input v-model="form.phone" :max-length="11" />
-        </a-form-item>
-        <a-form-item field="status" label="状态">
-          <a-select v-model="form.status">
-            <a-option :value="UserStatus.ENABLE">启用</a-option>
-            <a-option :value="UserStatus.DISABLE">禁用</a-option>
-          </a-select>
-        </a-form-item>
-      </a-form>
-    </a-modal>
-  </div>
-</template>
+<script lang="ts">
+export default {
+  name: 'StaffSaveDialog'
+}
+</script>
 
 <style lang="scss" scoped>
 </style>
