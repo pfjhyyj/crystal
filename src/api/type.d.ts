@@ -13,4 +13,7 @@ export interface PageResponse<T> extends ApiResponse<T> {
   current: number
   pageSize: number
   total: number
+  list: T[]
 }
+
+export type numberic = number | string

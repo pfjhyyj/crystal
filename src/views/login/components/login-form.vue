@@ -71,7 +71,7 @@ import { type ValidatedError } from '@arco-design/web-vue/es/form/interface'
 import { useStorage } from '@vueuse/core'
 import { useUserStore } from '@/store'
 import useLoading from '@/hooks/loading'
-import type { LoginData } from '@/api/user'
+import type { LoginData } from '@/api/auth'
 
 const router = useRouter()
 const errorMessage = ref('')
@@ -160,3 +160,4 @@ const setRememberPassword = (value: boolean): void => {
   }
 }
 </style>
+@/api/auth@/api/tenant

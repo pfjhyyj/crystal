@@ -4,7 +4,7 @@ import {
   logout as userLogout,
   getUserInfo,
   type LoginData
-} from '@/api/user'
+} from '@/api/auth'
 import { setToken, clearToken } from '@/utils/auth'
 import { removeRouteListener } from '@/utils/route-listener'
 import { type UserState } from './types'
