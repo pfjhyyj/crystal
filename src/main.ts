@@ -12,6 +12,10 @@ import directive from '@/directive'
 import './mock'
 
 const app = createApp(App)
+app.config.errorHandler = function (err: any, _vm: any, info: any) {
+  console.error(`Error: ${err.toString()}\nStack: ${err.stack}\nInfo: ${info}`)
+}
+
 const pinia = createPinia()
 app.use(ArcoVue, {})
 app.use(ArcoVueIcon)
