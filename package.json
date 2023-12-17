@@ -27,6 +27,7 @@
     "@types/mockjs": "^1.0.9",
     "@types/node": "^20.8.3",
     "@types/nprogress": "^0.2.1",
+    "@types/sortablejs": "^1.15.7",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@vitejs/plugin-vue": "^4.2.3",
     "eslint": "^8.0.1",

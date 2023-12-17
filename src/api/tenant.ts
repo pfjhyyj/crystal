@@ -2,10 +2,10 @@ import request from '@/utils/request'
 import { type PageRequest, type PageResponse, type numberic } from './type'
 
 export interface Tenant {
-  id: numberic
+  tenantId: numberic
   name: string
   code: string
-  description?: string
+  description: string
   status: TenantStatus
 }
 
@@ -22,31 +22,30 @@ export interface TenantCreateReq {
 }
 
 export interface TenantCreateResp {
-  id: number
+  tenantId: number
 }
 
 export async function createTenant (data: TenantCreateReq): Promise<TenantCreateResp> {
   return await request.post<TenantCreateResp>('/api/tenants', data)
 }
 
-export async function getTenant (id: numberic): Promise<Tenant> {
-  return await request.get<Tenant>(`/api/tenants/${id}`)
+export async function getTenant (tenantId: numberic): Promise<Tenant> {
+  return await request.get<Tenant>(`/api/tenants/${tenantId}`)
 }
 
 export interface TenantUpdateReq {
-  id: number
   name: string
   code: string
   description?: string
   status: TenantStatus
 }
 
-export async function updateTenant (id: numberic, data: TenantUpdateReq): Promise<void> {
-  await request.put(`/api/tenants/${id}`, data)
+export async function updateTenant (tenantId: numberic, data: TenantUpdateReq): Promise<void> {
+  await request.put(`/api/tenants/${tenantId}`, data)
 }
 
-export async function deleteTenant (id: numberic): Promise<void> {
-  await request.delete(`/api/tenants/${id}`)
+export async function deleteTenant (tenantId: numberic): Promise<void> {
+  await request.delete(`/api/tenants/${tenantId}`)
 }
 
 export interface TenantListReq extends PageRequest {
