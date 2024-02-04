@@ -21,7 +21,7 @@ class Request {
       if (response.status !== 200) {
         return Promise.reject(data)
       }
-      if (data.code !== 20000) {
+      if (data.code !== 0) {
         Message.error({
           content: data.msg
         })

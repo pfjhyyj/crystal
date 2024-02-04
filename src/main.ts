@@ -9,8 +9,6 @@ import ArcoVueIcon from '@arco-design/web-vue/es/icon'
 import router from '@/router'
 import directive from '@/directive'
 
-import './mock'
-
 const app = createApp(App)
 app.config.errorHandler = function (err: any, _vm: any, info: any) {
   console.error(`Error: ${err.toString()}\nStack: ${err.stack}\nInfo: ${info}`)

@@ -8,19 +8,20 @@ export interface LoginData {
 }
 
 export interface LoginRes {
-  token: string
+  accessToken: string
+  expireTime: number
 }
 
 export async function login (data: LoginData) {
-  return await request.post<LoginRes>('/api/user/login', data)
+  return await request.post<LoginRes>('/api/auth/loginByUsername', data)
 }
 
 export async function logout () {
-  return await request.post<LoginRes>('/api/user/logout')
+  return await request.post<LoginRes>('/api/auth/logout')
 }
 
 export async function getUserInfo () {
-  return await request.post<UserState>('/api/user/info')
+  return await request.post<UserState>('/api/my')
 }
 
 export async function getMenuList () {
