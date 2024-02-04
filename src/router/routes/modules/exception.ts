@@ -9,7 +9,8 @@ const EXCEPTION: AppRouteRecordRaw = {
     locale: '异常页',
     requiresAuth: true,
     icon: 'icon-exclamation-circle',
-    order: 6
+    order: 6,
+    hideInMenu: true
   },
   children: [
     {
@@ -19,7 +20,8 @@ const EXCEPTION: AppRouteRecordRaw = {
       meta: {
         locale: '403',
         requiresAuth: true,
-        roles: ['*']
+        roles: ['*'],
+        hideInMenu: true
       }
     },
     {
@@ -29,7 +31,8 @@ const EXCEPTION: AppRouteRecordRaw = {
       meta: {
         locale: '404',
         requiresAuth: true,
-        roles: ['*']
+        roles: ['*'],
+        hideInMenu: true
       }
     },
     {
@@ -39,7 +42,8 @@ const EXCEPTION: AppRouteRecordRaw = {
       meta: {
         locale: '500',
         requiresAuth: true,
-        roles: ['*']
+        roles: ['*'],
+        hideInMenu: true
       }
     }
   ]
