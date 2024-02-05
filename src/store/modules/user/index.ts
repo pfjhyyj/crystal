@@ -12,22 +12,8 @@ import useAppStore from '../app'
 
 const useUserStore = defineStore('user', {
   state: (): UserState => ({
-    name: undefined,
-    avatar: undefined,
-    job: undefined,
-    organization: undefined,
-    location: undefined,
-    email: undefined,
-    introduction: undefined,
-    personalWebsite: undefined,
-    jobName: undefined,
-    organizationName: undefined,
-    locationName: undefined,
-    phone: undefined,
-    registrationDate: undefined,
-    accountId: undefined,
-    certification: undefined,
-    role: ''
+    userId: undefined,
+    username: undefined
   }),
 
   getters: {
@@ -37,12 +23,6 @@ const useUserStore = defineStore('user', {
   },
 
   actions: {
-    async switchRoles () {
-      return await new Promise((resolve) => {
-        this.role = this.role === 'user' ? 'admin' : 'user'
-        resolve(this.role)
-      })
-    },
     // Set user's information
     setInfo (partial: Partial<UserState>) {
       this.$patch(partial)
@@ -57,7 +37,11 @@ const useUserStore = defineStore('user', {
     async info () {
       const res = await getUserInfo()
 
-      this.setInfo(res)
+      this.setInfo({
+        userId: res.userId,
+        username: res.username,
+        avatar: res.avatar
+      })
     },
 
     // Login

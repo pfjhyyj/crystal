@@ -102,23 +102,7 @@
           </a-avatar>
           <template #content>
             <a-doption>
-              <a-space @click="switchRoles">
-                <icon-tag />
-                <span>
-                  切换角色
-                </span>
-              </a-space>
-            </a-doption>
-            <a-doption>
-              <a-space @click="$router.push({ name: 'Info' })">
-                <icon-user />
-                <span>
-                  用户中心
-                </span>
-              </a-space>
-            </a-doption>
-            <a-doption>
-              <a-space @click="$router.push({ name: 'Setting' })">
+              <a-space @click="$router.push({ name: 'MySetting' })">
                 <icon-settings />
                 <span>
                   用户设置
@@ -142,7 +126,6 @@
 
 <script lang="ts" setup>
 import { computed, ref, inject } from 'vue'
-import { Message } from '@arco-design/web-vue'
 import { useDark, useToggle, useFullscreen } from '@vueuse/core'
 import { useAppStore, useUserStore } from '@/store'
 import useUser from '@/hooks/user'
@@ -186,10 +169,6 @@ const setPopoverVisible = () => {
 }
 const handleLogout = () => {
   void logout()
-}
-const switchRoles = async () => {
-  const res = await userStore.switchRoles()
-  Message.success(res as string)
 }
 const toggleDrawerMenu = inject('toggleDrawerMenu') as () => void
 </script>
