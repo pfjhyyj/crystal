@@ -25,14 +25,14 @@
 </template>
 
 <script setup lang="ts">
-import { type User } from '@/api/user'
+import { type UserDetailResp } from '@/api/user'
 import { type DescData } from '@arco-design/web-vue'
 import { computed } from 'vue'
 import { type PropType } from 'vue'
 
 const props = defineProps({
   data: {
-    type: Object as PropType<User>,
+    type: Object as PropType<UserDetailResp>,
     required: false
   }
 })
@@ -45,8 +45,12 @@ const renderData = computed(() => {
       value: props.data.username ?? '未设置'
     },
     {
+      label: '邮箱',
+      value: props.data.email ?? '未设置'
+    },
+    {
       label: '手机号',
-      value: props.data.phoneNumber ?? '未设置'
+      value: props.data.mobile ?? '未设置'
     }
   ] as DescData[]
 })

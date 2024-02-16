@@ -2,15 +2,9 @@
   <div class="dialog">
     <a-modal v-model:visible="visible" title="添加角色" @cancel="handleCancel" :on-before-ok="handleBeforeOk">
       <a-form ref="formRef" :model="form">
-        <a-form-item
-          field="username"
-          label="用户名"
-        >
-          <a-input v-model="form.username" disabled />
-        </a-form-item>
-        <a-form-item field="newRoleId" label="新角色">
+        <a-form-item field="newRoleId" label="新角色" :rules="[{required:true,message:'请选择角色'}]">
           <a-select v-model="form.newRoleId">
-            <a-option v-for="item in roles" :key="item.roleId" :value="item.roleId">{{`${item.tenantName} - ${item.roleName}`}}</a-option>
+            <a-option v-for="item in roles" :key="item.roleId" :value="item.roleId">{{`${item.roleName}`}}</a-option>
           </a-select>
         </a-form-item>
       </a-form>
@@ -21,23 +15,24 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Message, type FormInstance } from '@arco-design/web-vue'
-import { type Role, listRole, assignRole } from '@/api/role'
-import { type User } from '@/api/user'
+import { type RolePageResp, listRole, addUserRole } from '@/api/role'
 
 const emit = defineEmits(['refresh'])
 
 const formRef = ref<FormInstance>()
 const visible = ref(false)
-const roles = ref<Role[]>()
+const roles = ref<RolePageResp[]>()
 
-void listRole().then((res) => {
-  roles.value = res.roles
+void listRole({
+  current: 1,
+  pageSize: 20
+}).then((res) => {
+  roles.value = res.list
 })
 
 const initForm = () => {
   return {
     userId: '',
-    username: '',
     newRoleId: ''
   }
 }
@@ -57,24 +52,25 @@ const handleBeforeOk = async () => {
 }
 
 const handleUpdate = async () => {
-  return await assignRole({
+  return await addUserRole({
     userId: form.value.userId,
-    newRoleId: form.value.newRoleId
+    roleIds: [form.value.newRoleId]
   }).then(() => {
-    Message.success('更新成功')
+    Message.success('添加成功')
     emit('refresh')
     return true
   }).catch(() => {
-    Message.error('更新失败')
+    Message.error('添加失败')
     return false
   })
 }
 
-const open = (data: User) => {
+const open = (data: {
+  userId: string
+}) => {
   form.value = {
     ...form.value,
-    userId: data.userId as string,
-    username: data.username as string
+    userId: data.userId
   }
   visible.value = true
 }

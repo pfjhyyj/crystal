@@ -15,10 +15,20 @@ const DASHBOARD: AppRouteRecordRaw = {
     {
       path: 'manage',
       name: 'UserManage',
-      component: async () => await import('@/views/dashboard/workplace/index.vue'),
+      component: async () => await import('@/views/user/list/index.vue'),
       meta: {
         locale: '用户管理',
         requiresAuth: true
+      }
+    },
+    {
+      path: 'detail',
+      name: 'UserDetail',
+      component: async () => await import('@/views/user/detail/index.vue'),
+      meta: {
+        locale: '用户详情',
+        requiresAuth: true,
+        hideInMenu: true
       }
     }
   ]

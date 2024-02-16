@@ -20,19 +20,17 @@
 <script lang="ts" setup>
 import UserCard from './components/UserCard.vue'
 import RoleTab from './components/RoleTab.vue'
-import { getUserInfo, type User } from '@/api/user'
+import { getUserDetail, type UserDetailResp } from '@/api/user'
 import { ref } from 'vue'
 import { useQuery } from '@/hooks/query'
 
 const query = useQuery<{
   id: string
 }>()
-const data = ref<User>()
+const data = ref<UserDetailResp>()
 const fetchData = async () => {
-  const res = await getUserInfo({
-    userId: query.value.id
-  })
-  data.value = res.user
+  const res = await getUserDetail(query.value.id)
+  data.value = res
 }
 
 void fetchData()
@@ -49,7 +47,7 @@ export default {
   padding: 20px;
 }
 .wrapper {
-  padding: 20px 0 0 20px;
+  padding: 20px;
   min-height: 580px;
   background-color: var(--color-bg-2);
   border-radius: 4px;

@@ -80,10 +80,10 @@
         </template>
         <template #status="{ record }">
           <a-tag
-            :color="record.status === UserStatusEnum.StatusValid ? 'green' : 'red'"
+            :color="record.status === UserStatusEnum.StatusEnabled ? 'green' : 'red'"
           >
             {{
-              record.status === UserStatusEnum.StatusValid ? '启用' : '禁用'
+              record.status === UserStatusEnum.StatusEnabled ? '启用' : '禁用'
             }}
           </a-tag>
         </template>
@@ -101,7 +101,7 @@
 import useLoading from '@/hooks/loading.ts'
 import { reactive, ref, computed } from 'vue'
 import { type TableColumnData } from '@arco-design/web-vue'
-import { getUserList, type User, UserStatusEnum } from '@/api/user'
+import { getUserList, type DefineListUserPageResponse, UserStatusEnum } from '@/api/user'
 
 const { loading, setLoading } = useLoading(true)
 const pagination = reactive({
@@ -109,7 +109,7 @@ const pagination = reactive({
   pageSize: 20,
   total: 0
 })
-const renderData = ref<User[]>([])
+const renderData = ref<DefineListUserPageResponse[]>([])
 const columns = computed<TableColumnData[]>(() => [
   {
     title: '序号',
@@ -121,8 +121,12 @@ const columns = computed<TableColumnData[]>(() => [
     dataIndex: 'username'
   },
   {
+    title: '邮箱',
+    dataIndex: 'email'
+  },
+  {
     title: '手机号',
-    dataIndex: 'phoneNumber'
+    dataIndex: 'mobile'
   },
   {
     title: '状态',
@@ -150,13 +154,11 @@ const fetchData = async (
   setLoading(true)
   try {
     const data = await getUserList({
-      page: {
-        pageCnt: params.pageSize,
-        pageNo: params.current
-      }
+      pageSize: params.pageSize,
+      current: params.current
     })
-    renderData.value = data.users
-    pagination.current = params.current
+    renderData.value = data.list
+    pagination.current = data.current
     pagination.total = data.total
   } catch (err) {
     console.log(err)

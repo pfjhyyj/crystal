@@ -9,7 +9,7 @@ export interface PageRequest {
   pageSize: number
 }
 
-export interface PageResponse<T> extends ApiResponse<T> {
+export interface PageResponse<T> {
   current: number
   pageSize: number
   total: number

@@ -49,10 +49,9 @@
 import useLoading from '@/hooks/loading.ts'
 import { reactive, ref, computed } from 'vue'
 import { type TableColumnData, Modal, Message } from '@arco-design/web-vue'
-import { type User, getUserInfo } from '@/api/user'
-import { revokeRole, type Role } from '@/api/role'
 import { useQuery } from '@/hooks/query'
 import RoleAssignDialog from './RoleAssignDialog.vue'
+import { deleteUserRole, listUserRoles, type UserRolePageResp } from '@/api/role'
 
 const { loading, setLoading } = useLoading(true)
 
@@ -67,8 +66,7 @@ const query = useQuery<{
 }>()
 
 const saveDialog = ref<typeof RoleAssignDialog>()
-const data = ref<User>()
-const renderData = ref<Role[]>([])
+const renderData = ref<UserRolePageResp[]>([])
 const columns = computed<TableColumnData[]>(() => [
   {
     title: '序号',
@@ -80,10 +78,6 @@ const columns = computed<TableColumnData[]>(() => [
     dataIndex: 'roleName'
   },
   {
-    title: '租户名',
-    dataIndex: 'tenantName'
-  },
-  {
     title: '操作',
     dataIndex: 'operations',
     slotName: 'operations'
@@ -91,17 +85,18 @@ const columns = computed<TableColumnData[]>(() => [
 ])
 
 const fetchData = async (
-  _params = { current: 1, pageSize: 20 }
+  params = { current: 1, pageSize: 20 }
 ) => {
   setLoading(true)
   try {
-    const res = await getUserInfo({
+    const res = await listUserRoles({
+      current: params.current,
+      pageSize: params.pageSize,
       userId: query.value.id
     })
-    data.value = res.user
-    renderData.value = res.user.roles
-    pagination.current = 1
-    pagination.total = res.user.roles.length
+    renderData.value = res.list
+    pagination.current = res.current
+    pagination.total = res.total
   } catch (err) {
     console.log(err)
   } finally {
@@ -118,20 +113,19 @@ const onPageChange = (current: number) => {
 
 const handleAdd = () => {
   saveDialog.value?.open({
-    userId: query.value.id,
-    username: data.value?.username
+    userId: query.value.id
   })
 }
 
-const handleDelete = (record: Role) => {
+const handleDelete = (record: UserRolePageResp) => {
   Modal.warning({
     title: '警告',
     content: `你正在删除角色${record.roleName}，是否继续？`,
     hideCancel: false,
     onOk () {
-      void revokeRole({
+      void deleteUserRole({
         userId: query.value.id,
-        revokedRoleId: record.roleId as string
+        roleIds: [record.roleId]
       }).then(() => {
         Message.success('删除角色成功')
         void fetchData()
