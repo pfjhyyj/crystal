@@ -36,7 +36,7 @@ export async function deleteUserRole (req: DeleteUserRoleReq) {
 }
 
 export interface ListRolePageReq extends PageRequest {
-
+  roleName?: string
 }
 
 export interface RolePageResp {
@@ -74,4 +74,45 @@ export async function updateRole (roleId: numberic, req: updateRoleReq) {
 
 export async function deleteRole (roleId: numberic) {
   return await request.delete(`/api/roles/${roleId}`)
+}
+
+export interface Role {
+  description?: string
+  roleCode?: string
+  roleId?: number
+  roleName?: string
+}
+
+export async function getRole (roleId: numberic): Promise<Role> {
+  return await request.get(`/api/roles/${roleId}`)
+}
+
+export interface RolePermissionReq extends PageRequest {
+}
+
+export interface RolePermission {
+  permissionId: number
+  permissionName: string
+}
+
+export interface RolePermissionResp extends PageResponse<RolePermission> {}
+
+export async function listRolePermission (roleId: numberic, req: RolePermissionReq): Promise<RolePermissionResp> {
+  return await request.get(`/api/roles/${roleId}/permissions`, req)
+}
+
+export interface AddRolePermissionReq {
+  permissionIds: number[]
+}
+
+export async function addRolePermission (roleId: numberic, req: AddRolePermissionReq) {
+  return await request.post(`/api/roles/${roleId}/permissions/add`, req)
+}
+
+export interface DeleteRolePermissionReq {
+  permissionIds: number[]
+}
+
+export async function deleteRolePermission (roleId: numberic, req: DeleteRolePermissionReq) {
+  return await request.post(`/api/roles/${roleId}/permissions/delete`, req)
 }

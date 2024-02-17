@@ -37,6 +37,7 @@ export async function deletePermission (permissionId: number) {
 
 interface PermissionPageReq extends PageRequest {
   target?: string
+  name?: string
 }
 
 export interface PermissionPageResp {
@@ -47,6 +48,6 @@ export interface PermissionPageResp {
   description: string
 }
 
-export async function getPermissionList (params: PermissionPageReq) {
+export async function listPermission (params: PermissionPageReq) {
   return await request.get<PageResponse<PermissionPageResp>>('/api/permissions', params)
 }

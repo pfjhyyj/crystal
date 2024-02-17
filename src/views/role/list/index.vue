@@ -13,11 +13,11 @@
               <a-col :span="8">
                 <a-form-item
                   field="name"
-                  label="目标资源"
+                  label="角色名称"
                 >
                   <a-input
-                    v-model="formModel.target"
-                    @press-enter="search"
+                    v-model="formModel.roleName"
+                    placeholder="角色名称"
                   />
                 </a-form-item>
               </a-col>
@@ -50,7 +50,7 @@
               <template #icon>
                 <icon-plus />
               </template>
-              新建权限
+              新建角色
             </a-button>
           </a-space>
         </a-col>
@@ -79,36 +79,33 @@
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
         <template #operations="{record}">
-          <a-button type="text" size="small" @click="handleEditTenant(record)">
+          <a-button type="text" size="small" @click="handleEdit(record)">
             编辑
-          </a-button>
-          <a-button type="text" size="small" @click="handleDeleteTenant(record)">
-            删除
           </a-button>
         </template>
       </a-table>
     </a-card>
-    <PermissionSaveDialog ref="saveDialog" @refresh="fetchData" />
+    <role-save-dialog ref="saveDialog" @refresh="fetchData"/>
   </div>
 </template>
 
 <script setup lang="ts">
-import PermissionSaveDialog from '../components/PermissionSaveDialog.vue'
 import useLoading from '@/hooks/loading.ts'
 import { reactive, ref, computed } from 'vue'
 import { type TableColumnData } from '@arco-design/web-vue'
-import { Message, Modal } from '@arco-design/web-vue'
-import { deletePermission, listPermission, type Permission, type PermissionPageResp } from '@/api/permission'
+import { listRole, type RolePageResp } from '@/api/role'
+import { useRouter } from 'vue-router'
+import RoleSaveDialog from '../components/RoleSaveDialog.vue'
 
-const saveDialog = ref<typeof PermissionSaveDialog>()
-
+const router = useRouter()
 const { loading, setLoading } = useLoading(true)
+const saveDialog = ref<typeof RoleSaveDialog>()
 const pagination = reactive({
   current: 1,
   pageSize: 20,
   total: 0
 })
-const renderData = ref<PermissionPageResp[]>([])
+const renderData = ref<RolePageResp[]>([])
 const columns = computed<TableColumnData[]>(() => [
   {
     title: '序号',
@@ -116,16 +113,16 @@ const columns = computed<TableColumnData[]>(() => [
     slotName: 'index'
   },
   {
-    title: '名称',
-    dataIndex: 'name'
+    title: '角色名',
+    dataIndex: 'roleName'
   },
   {
-    title: '目标资源',
-    dataIndex: 'target'
+    title: '角色编码',
+    dataIndex: 'roleCode'
   },
   {
-    title: '权限动作',
-    dataIndex: 'action'
+    title: '角色描述',
+    dataIndex: 'description'
   },
   {
     title: '操作',
@@ -136,7 +133,7 @@ const columns = computed<TableColumnData[]>(() => [
 
 const generateFormModel = () => {
   return {
-    target: ''
+    roleName: ''
   }
 }
 const formModel = ref(generateFormModel())
@@ -146,9 +143,10 @@ const fetchData = async (
 ) => {
   setLoading(true)
   try {
-    const data = await listPermission({
-      ...params,
-      ...formModel.value
+    const data = await listRole({
+      pageSize: params.pageSize,
+      current: params.current,
+      roleName: formModel.value.roleName
     })
     renderData.value = data.list
     pagination.current = data.current
@@ -158,6 +156,19 @@ const fetchData = async (
   } finally {
     setLoading(false)
   }
+}
+
+const handleAdd = () => {
+  saveDialog.value?.open()
+}
+
+const handleEdit = (record: RolePageResp) => {
+  void router.push({
+    name: 'RoleDetail',
+    query: {
+      id: record.roleId
+    }
+  })
 }
 
 const onPageChange = (current: number) => {
@@ -175,37 +186,12 @@ const reset = () => {
   formModel.value = generateFormModel()
 }
 
-const handleAdd = () => {
-  saveDialog.value?.open()
-}
-
-const handleEditTenant = (data: Permission) => {
-  saveDialog.value?.open(data)
-}
-
-const handleDeleteTenant = (data: Permission) => {
-  Modal.warning({
-    title: '警告',
-    content: `你正在删除${data.name}，删除后不可恢复，是否继续？`,
-    hideCancel: false,
-    onOk () {
-      void deletePermission(data.permissionId)
-        .then(() => {
-          Message.success('删除成功')
-          void fetchData()
-        }).catch(() => {
-          Message.error('删除失败')
-        })
-    }
-  })
-}
-
 void fetchData()
 </script>
 
 <script lang="ts">
 export default {
-  name: 'PermissionManage'
+  name: 'UserManage'
 }
 </script>
 
