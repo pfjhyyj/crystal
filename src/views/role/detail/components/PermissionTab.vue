@@ -49,7 +49,6 @@ import { type TableColumnData, Modal, Message } from '@arco-design/web-vue'
 import { useQuery } from '@/hooks/query'
 import { listRolePermission, type RolePermission, deleteRolePermission } from '@/api/role'
 import PermissionAssignDialog from './PermissionAssignDialog.vue'
-import { type PermissionPageResp } from '@/api/permission'
 
 const { loading, setLoading } = useLoading(true)
 

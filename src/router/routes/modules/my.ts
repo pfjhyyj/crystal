@@ -7,7 +7,6 @@ const MY: AppRouteRecordRaw = {
   component: DEFAULT_LAYOUT,
   meta: {
     locale: '个人中心',
-    requiresAuth: true,
     icon: 'icon-user',
     order: 0
   },
@@ -18,7 +17,6 @@ const MY: AppRouteRecordRaw = {
       component: async () => await import('@/views/user/my/index.vue'),
       meta: {
         locale: '用户设置',
-        requiresAuth: true,
         hideInMenu: true
       }
     }

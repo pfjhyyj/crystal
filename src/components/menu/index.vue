@@ -103,8 +103,8 @@ export default defineComponent({
       return result
     }
     listenerRouteChange((newRoute) => {
-      const { requiresAuth, activeMenu, hideInMenu } = newRoute.meta
-      if (requiresAuth && (!(hideInMenu ?? false) || (activeMenu ?? '') !== '')) {
+      const { anonymous, activeMenu, hideInMenu } = newRoute.meta
+      if (!(anonymous ?? false) && (!(hideInMenu ?? false) || (activeMenu ?? '') !== '')) {
         const menuOpenKeys = findMenuOpenKeys(
           (activeMenu ?? newRoute.name) as string
         )

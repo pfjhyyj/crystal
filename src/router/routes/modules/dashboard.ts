@@ -7,7 +7,6 @@ const DASHBOARD: AppRouteRecordRaw = {
   component: DEFAULT_LAYOUT,
   meta: {
     locale: '工作台',
-    requiresAuth: true,
     icon: 'icon-dashboard',
     order: 0
   },
@@ -17,8 +16,7 @@ const DASHBOARD: AppRouteRecordRaw = {
       name: 'Workplace',
       component: async () => await import('@/views/dashboard/workplace/index.vue'),
       meta: {
-        locale: '工作台',
-        requiresAuth: true
+        locale: '工作台'
       }
     }
   ]

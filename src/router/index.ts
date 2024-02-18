@@ -18,7 +18,7 @@ const router: Router = createRouter({
       name: 'login',
       component: async () => await import('@/views/login/index.vue'),
       meta: {
-        requiresAuth: false
+        anonymous: true
       }
     },
     ...appRoutes,

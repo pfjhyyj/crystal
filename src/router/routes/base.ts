@@ -8,7 +8,6 @@ export const REDIRECT_MAIN: RouteRecordRaw = {
   name: 'redirectWrapper',
   component: DEFAULT_LAYOUT,
   meta: {
-    requiresAuth: true,
     hideInMenu: true
   },
   children: [
@@ -17,7 +16,6 @@ export const REDIRECT_MAIN: RouteRecordRaw = {
       name: REDIRECT_ROUTE_NAME,
       component: async () => await import('@/views/redirect/index.vue'),
       meta: {
-        requiresAuth: true,
         hideInMenu: true
       }
     }

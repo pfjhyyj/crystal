@@ -7,7 +7,6 @@ const EXCEPTION: AppRouteRecordRaw = {
   component: DEFAULT_LAYOUT,
   meta: {
     locale: '异常页',
-    requiresAuth: true,
     icon: 'icon-exclamation-circle',
     order: 6,
     hideInMenu: true
@@ -19,7 +18,6 @@ const EXCEPTION: AppRouteRecordRaw = {
       component: async () => await import('@/views/exception/403/index.vue'),
       meta: {
         locale: '403',
-        requiresAuth: true,
         roles: ['*'],
         hideInMenu: true
       }
@@ -30,7 +28,6 @@ const EXCEPTION: AppRouteRecordRaw = {
       component: async () => await import('@/views/exception/404/index.vue'),
       meta: {
         locale: '404',
-        requiresAuth: true,
         roles: ['*'],
         hideInMenu: true
       }
@@ -41,7 +38,6 @@ const EXCEPTION: AppRouteRecordRaw = {
       component: async () => await import('@/views/exception/500/index.vue'),
       meta: {
         locale: '500',
-        requiresAuth: true,
         roles: ['*'],
         hideInMenu: true
       }
