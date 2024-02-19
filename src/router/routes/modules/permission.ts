@@ -28,6 +28,15 @@ const PERMISSION: AppRouteRecordRaw = {
       }
     },
     {
+      path: 'menuDetail',
+      name: 'MenuDetail',
+      component: async () => await import('@/views/menu/detail/index.vue'),
+      meta: {
+        locale: '菜单详情',
+        hideInMenu: true
+      }
+    },
+    {
       path: 'roles',
       name: 'RoleManage',
       component: async () => await import('@/views/role/list/index.vue'),

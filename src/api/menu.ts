@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { type PageRequest, type PageResponse } from './type'
+import { type numberic, type PageRequest, type PageResponse } from './type'
 
 export enum MenuType {
   MENU_CATEGORY = 1,
@@ -59,9 +59,15 @@ export interface Menu {
   order: number
   parentId: number
   path: string
+  locale: string
+  menuType: MenuType
   children?: Menu[]
 }
 
-export async function getMenuTree (menuId: number): Promise<Menu[]> {
-  return await request.get<Menu[]>(`/api/menus/${menuId}/tree`)
+export interface GetMenuTreeResponse {
+  menus: Menu[]
+}
+
+export async function getMenuTree (menuId: numberic): Promise<GetMenuTreeResponse> {
+  return await request.get(`/api/menus/${menuId}/tree`)
 }

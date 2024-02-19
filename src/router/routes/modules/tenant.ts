@@ -6,7 +6,7 @@ const TENANT: AppRouteRecordRaw = {
   name: 'Tenants',
   component: DEFAULT_LAYOUT,
   meta: {
-    locale: '租户管理'
+    locale: '租户管理',
     icon: 'icon-user',
     order: 0
   },

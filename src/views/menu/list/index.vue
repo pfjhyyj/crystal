@@ -114,7 +114,7 @@ const columns = computed<TableColumnData[]>(() => [
   },
   {
     title: '菜单名',
-    dataIndex: 'name'
+    dataIndex: 'locale'
   },
   {
     title: '操作',

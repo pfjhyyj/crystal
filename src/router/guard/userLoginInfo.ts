@@ -9,23 +9,25 @@ export default function setupUserLoginInfoGuard (router: Router) {
     NProgress.start()
     const userStore = useUserStore()
     if (isLogin()) {
-      if (userStore.role !== undefined) {
-        next()
-      } else {
-        try {
-          await userStore.info()
-          next()
-        } catch (error) {
-          await userStore.logout()
-          const query: LocationQueryRaw = {
-            redirect: to.name as string,
-            ...to.query
-          }
+      try {
+        await userStore.info()
+        if (to.name === 'login') {
           next({
-            name: 'login',
-            query
+            name: 'dashboard'
           })
+          return
         }
+        next()
+      } catch (error) {
+        await userStore.logout()
+        const query: LocationQueryRaw = {
+          redirect: to.name as string,
+          ...to.query
+        }
+        next({
+          name: 'login',
+          query
+        })
       }
     } else {
       if (to.name === 'login') {
