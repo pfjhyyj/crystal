@@ -9,6 +9,9 @@ export function parseListToTree<T extends GenericNode> (
   idField = 'id',
   parentIdField = 'parentId'
 ): T[] {
+  if (!Array.isArray(list)) {
+    throw new Error('list must be an array')
+  }
   const tree: T[] = []
   list.forEach((node) => {
     if (node[idField] === undefined || node[parentIdField] === undefined) {

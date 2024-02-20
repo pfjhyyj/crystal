@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { Notification } from '@arco-design/web-vue'
 import type { RouteRecordNormalized } from 'vue-router'
 import { getMenuList } from '@/api/auth'
+import { parseListToTree } from '@/utils/tree'
 import { type AppState } from './types'
 
 const useAppStore = defineStore('app', {
@@ -65,7 +66,8 @@ const useAppStore = defineStore('app', {
           content: 'loading',
           closable: true
         })
-        this.serverMenu = await getMenuList()
+        const menus = await getMenuList()
+        this.serverMenu = parseListToTree(menus)
         Notification.success({
           id: 'menuNotice',
           content: 'success',

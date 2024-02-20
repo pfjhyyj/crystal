@@ -1,6 +1,6 @@
 <template>
   <div class="dialog">
-    <a-modal v-model:visible="visible" :title="editMode ? '编辑菜单' : '新建菜单'" @cancel="handleCancel" :on-before-ok="handleSubmit">
+    <a-modal v-model:visible="visible" :title="editMode ? '编辑按钮' : '新建按钮'" @cancel="handleCancel" :on-before-ok="handleSubmit">
       <a-form ref="formRef" :model="form">
         <a-form-item
           v-if="form.parentId != 0"
@@ -13,42 +13,38 @@
             v-model="form.parentId"
             :placeholder="'请选择上级菜单'"
             :data="props.menus"
+            :fieldNames="{
+              key: 'menuId',
+              title: 'locale',
+            }"
+            disabled
           ></a-tree-select>
         </a-form-item>
         <a-form-item
           field="locale"
-          label="菜单名称"
-          :rules="[{required:true,message:'请输入菜单名称'}]"
+          label="按钮名称"
+          :rules="[{required:true,message:'请输入按钮名称'}]"
           :validate-trigger="['change','input']"
         >
           <a-input v-model="form.locale" :max-length="20" />
         </a-form-item>
         <a-form-item
-          v-if="form.parentId != 0"
-          field="menuType"
-          label="菜单类型"
-          :rules="[{required:true,message:'请选择菜单类型'}]"
-          :validate-trigger="['change','input']"
-        >
-          <a-radio-group v-model="form.menuType">
-            <a-radio :value="MenuType.MENU_ITEM">菜单项</a-radio>
-            <a-radio :value="MenuType.MENU_BUTTON">按钮</a-radio>
-          </a-radio-group>
-        </a-form-item>
-        <a-form-item
           field="name"
-          label="菜单编码"
-          :rules="[{required:true,message:'请输入菜单编码'}]"
+          label="按钮编码"
+          :rules="[{required:true,message:'请输入按钮编码'}]"
           :validate-trigger="['change','input']"
         >
-          <a-input v-model="form.name" :max-length="20" />
+          <a-input v-model="form.name" :max-length="50" />
+        </a-form-item>
+        <a-form-item field="description" label="描述">
+          <a-textarea v-model="form.description" :auto-size="{minRows: 2}"/>
         </a-form-item>
         <a-form-item
-          field="icon"
-          label="菜单图标"
+          field="weight"
+          label="权重"
           :validate-trigger="['change','input']"
         >
-          <a-input v-model="form.icon" :max-length="20" />
+          <a-input-number v-model="form.weight" :default-value="0" mode="button" />
         </a-form-item>
       </a-form>
     </a-modal>
@@ -75,9 +71,11 @@ const initForm = () => {
     menuId: 0,
     parentId: 0,
     name: '',
-    menuType: MenuType.MENU_ITEM,
+    menuType: MenuType.MENU_BUTTON,
     icon: '',
-    locale: ''
+    locale: '',
+    description: '',
+    weight: 0
   }
 }
 const form = ref(initForm())

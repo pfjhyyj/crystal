@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 import { type RouteRecordNormalized } from 'vue-router'
+import { type Menu } from './menu'
 
 export interface LoginData {
   username: string
@@ -49,6 +50,10 @@ export async function updatePassword (data: updatePasswordReq) {
   return await request.put('/api/my/password', data)
 }
 
-export async function getMenuList () {
-  return await request.get<RouteRecordNormalized[]>('/api/user/menu')
+export interface GetMyMenuResponse {
+  menus: Menu[]
+}
+
+export async function getMenuList (): Promise<GetMyMenuResponse> {
+  return await request.get('/api/my/menus')
 }

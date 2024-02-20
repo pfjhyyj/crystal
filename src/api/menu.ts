@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { type numberic, type PageRequest, type PageResponse } from './type'
+import { type numberic, type PageRequest } from './type'
 
 export enum MenuType {
   MENU_CATEGORY = 1,
@@ -11,13 +11,11 @@ interface ListMenuRequest extends PageRequest {}
 
 export interface MenuPageResponse {
   menuId: number
-  name: string
+  locale: string
 }
 
-export interface ListMenuResponse extends PageResponse<MenuPageResponse> {}
-
-export async function listMenu (params: ListMenuRequest): Promise<ListMenuResponse> {
-  return await request.get<ListMenuResponse>('/api/menus', params)
+export async function listMenu (params: ListMenuRequest): Promise<Menu[]> {
+  return await request.get('/api/menus', params)
 }
 
 interface CreateMenuRequest {
@@ -25,7 +23,7 @@ interface CreateMenuRequest {
   locale?: string
   menuType?: number
   name?: string
-  order?: number
+  weight?: number
   parentId?: number
   path?: string
 }
@@ -39,7 +37,7 @@ interface UpdateMenuRequest {
   locale?: string
   menuType?: number
   name?: string
-  order?: number
+  weight?: number
   parentId?: number
   path?: string
 }
@@ -56,7 +54,7 @@ export interface Menu {
   icon: string
   menuId: number
   name: string
-  order: number
+  weight?: number
   parentId: number
   path: string
   locale: string

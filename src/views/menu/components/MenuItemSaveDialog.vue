@@ -3,6 +3,24 @@
     <a-modal v-model:visible="visible" :title="editMode ? '编辑菜单' : '新建菜单'" @cancel="handleCancel" :on-before-ok="handleSubmit">
       <a-form ref="formRef" :model="form">
         <a-form-item
+          v-if="form.parentId != 0"
+          field="parentId"
+          label="上级菜单"
+          :rules="[{required:true,message:'请选择上级菜单'}]"
+          :validate-trigger="['change','input']"
+        >
+          <a-tree-select
+            v-model="form.parentId"
+            :placeholder="'请选择上级菜单'"
+            :data="props.menus"
+            :fieldNames="{
+              key: 'menuId',
+              title: 'locale',
+            }"
+            disabled
+          ></a-tree-select>
+        </a-form-item>
+        <a-form-item
           field="locale"
           label="菜单名称"
           :rules="[{required:true,message:'请输入菜单名称'}]"
@@ -19,6 +37,16 @@
           <a-input v-model="form.name" :max-length="20" />
         </a-form-item>
         <a-form-item
+          field="icon"
+          label="菜单图标"
+          :validate-trigger="['change','input']"
+        >
+          <a-input v-model="form.icon" :max-length="20" />
+        </a-form-item>
+        <a-form-item field="description" label="描述">
+          <a-textarea v-model="form.description" :auto-size="{minRows: 2}"/>
+        </a-form-item>
+        <a-form-item
           field="weight"
           label="权重"
           :validate-trigger="['change','input']"
@@ -32,10 +60,14 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Message, type FormInstance } from '@arco-design/web-vue'
-import { type MenuPageResponse, createMenu, updateMenu, MenuType } from '@/api/menu'
+import { Message, type FormInstance, type CascaderOption } from '@arco-design/web-vue'
+import { MenuType, createMenu, updateMenu, type Menu } from '@/api/menu'
 
 const emit = defineEmits(['refresh'])
+
+const props = defineProps<{
+  menus: CascaderOption[]
+}>()
 
 const formRef = ref<FormInstance>()
 const visible = ref(false)
@@ -44,9 +76,12 @@ const editMode = ref(false)
 const initForm = () => {
   return {
     menuId: 0,
-    locale: '',
+    parentId: 0,
     name: '',
-    menuType: MenuType.MENU_CATEGORY,
+    menuType: MenuType.MENU_ITEM,
+    icon: '',
+    locale: '',
+    description: '',
     weight: 0
   }
 }
@@ -95,7 +130,7 @@ const handleUpdate = async () => {
   })
 }
 
-const open = (data?: MenuPageResponse) => {
+const open = (data?: Menu) => {
   if (data?.menuId != null) {
     editMode.value = true
     form.value = {
@@ -104,7 +139,10 @@ const open = (data?: MenuPageResponse) => {
     }
   } else {
     editMode.value = false
-    form.value = initForm()
+    form.value = {
+      ...initForm(),
+      ...data
+    }
   }
   visible.value = true
 }

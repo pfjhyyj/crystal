@@ -9,8 +9,7 @@ export default function setupUserLoginInfoGuard (router: Router) {
     NProgress.start()
     const userStore = useUserStore()
     if (isLogin()) {
-      try {
-        await userStore.info()
+      if (userStore.userId !== undefined) {
         if (to.name === 'login') {
           next({
             name: 'dashboard'
@@ -18,16 +17,27 @@ export default function setupUserLoginInfoGuard (router: Router) {
           return
         }
         next()
-      } catch (error) {
-        await userStore.logout()
-        const query: LocationQueryRaw = {
-          redirect: to.name as string,
-          ...to.query
+      } else {
+        try {
+          await userStore.info()
+          if (to.name === 'login') {
+            next({
+              name: 'dashboard'
+            })
+            return
+          }
+          next()
+        } catch (error) {
+          await userStore.logout()
+          const query: LocationQueryRaw = {
+            redirect: to.name as string,
+            ...to.query
+          }
+          next({
+            name: 'login',
+            query
+          })
         }
-        next({
-          name: 'login',
-          query
-        })
       }
     } else {
       if (to.name === 'login') {
