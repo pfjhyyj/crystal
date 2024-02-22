@@ -20,7 +20,7 @@ const useAppStore = defineStore('app', {
     globalSettings: false,
     device: 'desktop',
     tabBar: true,
-    menuFromServer: false,
+    menuFromServer: true,
     serverMenu: []
   }),
 
@@ -61,18 +61,8 @@ const useAppStore = defineStore('app', {
     },
     async fetchServerMenuConfig () {
       try {
-        Notification.info({
-          id: 'menuNotice', // Keep the instance id the same
-          content: 'loading',
-          closable: true
-        })
-        const menus = await getMenuList()
-        this.serverMenu = parseListToTree(menus)
-        Notification.success({
-          id: 'menuNotice',
-          content: 'success',
-          closable: true
-        })
+        const res = await getMenuList()
+        this.serverMenu = res.menus
       } catch (error) {
         Notification.error({
           id: 'menuNotice',

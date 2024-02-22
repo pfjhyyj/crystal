@@ -7,7 +7,10 @@
     </a-row>
     <a-row class="wrapper">
       <a-col :span="24">
-        <a-tabs default-active-key="2" type="rounded">
+        <a-tabs default-active-key="1" type="rounded">
+          <a-tab-pane key="1" title="菜单管理">
+            <menu-tab />
+          </a-tab-pane>
           <a-tab-pane key="2" title="权限管理">
             <permission-tab />
           </a-tab-pane>
@@ -23,6 +26,7 @@ import RoleCard from './components/RoleCard.vue'
 import { ref } from 'vue'
 import { getRole, type RolePageResp } from '@/api/role'
 import PermissionTab from './components/PermissionTab.vue'
+import MenuTab from './components/MenuTab.vue'
 
 const query = useQuery<{
   id: string

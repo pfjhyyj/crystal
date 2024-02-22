@@ -1,31 +1,17 @@
 import { type RouteLocationNormalized, type RouteRecordRaw } from 'vue-router'
-import { useUserStore } from '@/store'
+import { useAppStore } from '@/store'
+import { WHITE_LIST } from '@/router/constants'
 
 export default function usePermission () {
-  const userStore = useUserStore()
+  const appStore = useAppStore()
   return {
     accessRouter (route: RouteLocationNormalized | RouteRecordRaw) {
-      return (
-        ((route.meta?.anonymous) === true) ||
-        ((route.meta?.roles) == null) ||
-        route.meta?.roles?.includes('*') ||
-        route.meta?.roles?.includes(userStore.role)
-      )
-    },
-    findFirstPermissionRoute (_routers: any, role = 'admin') {
-      const cloneRouters = [..._routers]
-      while (cloneRouters.length > 0) {
-        const firstElement = cloneRouters.shift()
-        if (
-          firstElement?.meta?.roles?.find((el: string[]) => {
-            return el.includes('*') || el.includes(role)
-          }) !== undefined
-        ) { return { name: firstElement.name } }
-        if (firstElement?.children !== undefined) {
-          cloneRouters.push(...firstElement.children)
-        }
+      if (appStore.menuFromServer) {
+        const serverMenuConfig = [...appStore.appAsyncMenus, ...WHITE_LIST]
+        const result = serverMenuConfig.findIndex((x) => x.name === route.name)
+        if (result === -1) return false
       }
-      return null
+      return true
     }
   }
 }

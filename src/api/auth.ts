@@ -1,5 +1,4 @@
 import request from '@/utils/request'
-import { type RouteRecordNormalized } from 'vue-router'
 import { type Menu } from './menu'
 
 export interface LoginData {

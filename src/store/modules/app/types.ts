@@ -1,4 +1,4 @@
-import type { RouteRecordNormalized } from 'vue-router'
+import { type Menu } from '@/api/menu'
 
 export interface AppState {
   theme: string
@@ -15,6 +15,6 @@ export interface AppState {
   device: string
   tabBar: boolean
   menuFromServer: boolean
-  serverMenu: RouteRecordNormalized[]
+  serverMenu: Menu[]
   [key: string]: unknown
 }

@@ -1,31 +1,27 @@
 import { computed } from 'vue'
 import { type RouteRecordRaw, type RouteRecordNormalized } from 'vue-router'
-import usePermission from '@/hooks/permission'
 import { useAppStore } from '@/store'
 import appClientMenus from '@/router/app-menus'
 import { cloneDeep } from 'lodash'
 
 export default function useMenuTree () {
-  const permission = usePermission()
   const appStore = useAppStore()
   const appRoute = computed(() => {
-    if (appStore.menuFromServer) {
-      return appStore.appAsyncMenus
-    }
     return appClientMenus
   })
   const menuTree = computed(() => {
     const copyRouter = cloneDeep(appRoute.value) as RouteRecordNormalized[]
     copyRouter.sort((a: RouteRecordNormalized, b: RouteRecordNormalized) => {
-      return (a.meta.order ?? 0) - (b.meta.order ?? 0)
+      return (a.meta.weight ?? 0) - (b.meta.weight ?? 0)
     })
     function travel (routes: RouteRecordRaw[], layer: number) {
       if (routes == null) return null
 
       const collector: any = routes.map((element) => {
-        // no access
-        if (!permission.accessRouter(element)) {
-          return null
+        // check if the route is in the appAsyncMenus
+        if (appStore.menuFromServer) {
+          const result = appStore.appAsyncMenus.findIndex((x) => x.name === element.name)
+          if (result === -1) return null
         }
 
         // leaf node

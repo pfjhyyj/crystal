@@ -116,3 +116,19 @@ export interface DeleteRolePermissionReq {
 export async function deleteRolePermission (roleId: numberic, req: DeleteRolePermissionReq) {
   return await request.post(`/api/roles/${roleId}/permissions/delete`, req)
 }
+
+export interface ListRoleMenuResponse {
+  menuIds: number[]
+}
+
+export async function listRoleMenu (roleId: numberic): Promise<ListRoleMenuResponse> {
+  return await request.get(`/api/roles/${roleId}/menus`)
+}
+
+export interface SetRoleMenuReq {
+  menuIds: numberic[]
+}
+
+export async function setRoleMenu (roleId: numberic, req: SetRoleMenuReq) {
+  return await request.post(`/api/roles/${roleId}/menus/set`, req)
+}
