@@ -9,6 +9,7 @@ import { setToken, clearToken } from '@/utils/auth'
 import { removeRouteListener } from '@/utils/route-listener'
 import { type UserState } from './types'
 import useAppStore from '../app'
+import { getMessages, getMyMessages } from '@/api/msg'
 
 const useUserStore = defineStore('user', {
   state: (): UserState => ({
@@ -41,6 +42,14 @@ const useUserStore = defineStore('user', {
         userId: res.userId,
         username: res.username,
         avatar: res.avatar
+      })
+      void this.getUnreadMessagesCount()
+    },
+
+    async getUnreadMessagesCount () {
+      const res = await getMyMessages()
+      this.setInfo({
+        unreadMessageCount: res.unreadMessageCount
       })
     },
 

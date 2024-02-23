@@ -47,7 +47,7 @@
       <li>
         <a-tooltip content="消息通知">
           <div class="message-box-trigger">
-            <a-badge :count="9" dot>
+            <a-badge :count="unreadMessageCount" dot>
               <a-button
                 class="nav-btn"
                 type="outline"
@@ -171,6 +171,11 @@ const handleLogout = () => {
   void logout()
 }
 const toggleDrawerMenu = inject('toggleDrawerMenu') as () => void
+
+const unreadMessageCount = computed(() => {
+  return userStore.unreadMessageCount
+})
+
 </script>
 
 <style scoped lang="scss">
