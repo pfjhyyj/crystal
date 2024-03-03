@@ -9,7 +9,7 @@ import { setToken, clearToken } from '@/utils/auth'
 import { removeRouteListener } from '@/utils/route-listener'
 import { type UserState } from './types'
 import useAppStore from '../app'
-import { getMessages, getMyMessages } from '@/api/msg'
+import { getMyMessages } from '@/api/msg'
 
 const useUserStore = defineStore('user', {
   state: (): UserState => ({
