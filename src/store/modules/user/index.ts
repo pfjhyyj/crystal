@@ -14,7 +14,9 @@ import { getMyMessages } from '@/api/msg'
 const useUserStore = defineStore('user', {
   state: (): UserState => ({
     userId: undefined,
-    username: undefined
+    username: undefined,
+    avatar: undefined,
+    unreadMessageCount: 0
   }),
 
   getters: {
