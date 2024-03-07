@@ -40,7 +40,7 @@ export default function setupUserLoginInfoGuard (router: Router) {
         }
       }
     } else {
-      if (to.name === 'Login') {
+      if (to.meta.anonymous === true) {
         next()
         return
       }

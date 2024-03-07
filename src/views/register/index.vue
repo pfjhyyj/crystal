@@ -2,7 +2,7 @@
   <div class="container">
     <div class="content">
       <div class="register-form">
-        <RegisterForm />
+        <EmailForm />
       </div>
       <div class="footer">
         <Footer class="footer" />
@@ -12,8 +12,8 @@
 </template>
 
 <script lang="ts" setup>
-import RegisterForm from './components/RegisterForm.vue'
 import Footer from '@/components/footer/index.vue'
+import EmailForm from './components/EmailForm.vue'
 </script>
 
 <style lang="scss" scoped>
@@ -43,3 +43,4 @@ import Footer from '@/components/footer/index.vue'
   text-align: center;
 }
 </style>
+./components/MobileForm.vue
