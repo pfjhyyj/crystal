@@ -55,7 +55,7 @@
         <a-button type="primary" html-type="submit" long :loading="loading">
           登陆
         </a-button>
-        <a-button type="text" long class="register-btn">
+        <a-button type="text" long class="register-btn" @click="handleRegister">
           注册
         </a-button>
       </a-space>
@@ -124,6 +124,12 @@ const handleSubmit = async ({
 }
 const setRememberPassword = (value: boolean): void => {
   loginConfig.value.rememberPassword = value
+}
+
+const handleRegister = (): void => {
+  void router.push({
+    name: 'Register'
+  })
 }
 </script>
 

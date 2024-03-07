@@ -106,7 +106,7 @@ const form = reactive({
 
 const handleLogin = (): void => {
   void router.replace({
-    name: 'login'
+    name: 'Login'
   })
 }
 
@@ -151,7 +151,7 @@ const handleSubmit = async ({
       Message.success('注册成功！正在返回登陆界面')
       setTimeout(() => {
         void router.replace({
-          name: 'login'
+          name: 'Login'
         })
       }, 3000)
     })

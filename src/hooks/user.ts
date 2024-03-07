@@ -11,7 +11,7 @@ export default function useUser () {
     const currentRoute = router.currentRoute.value
     Message.success('登出成功')
     void router.push({
-      name: logoutTo ?? 'login',
+      name: logoutTo ?? 'Login',
       query: {
         ...router.currentRoute.value.query,
         redirect: currentRoute.name as string

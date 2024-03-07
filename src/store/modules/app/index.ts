@@ -19,7 +19,7 @@ const useAppStore = defineStore('app', {
     globalSettings: false,
     device: 'desktop',
     tabBar: true,
-    menuFromServer: true,
+    menuFromServer: false,
     serverMenu: []
   }),
 

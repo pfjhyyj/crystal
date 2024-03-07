@@ -11,12 +11,20 @@ const router: Router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: 'login'
+      redirect: 'Login'
     },
     {
       path: '/login',
-      name: 'login',
+      name: 'Login',
       component: async () => await import('@/views/login/index.vue'),
+      meta: {
+        anonymous: true
+      }
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: async () => await import('@/views/register/index.vue'),
       meta: {
         anonymous: true
       }

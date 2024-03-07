@@ -10,7 +10,7 @@ export default function setupUserLoginInfoGuard (router: Router) {
     const userStore = useUserStore()
     if (isLogin()) {
       if (userStore.userId !== undefined) {
-        if (to.name === 'login') {
+        if (to.name === 'Login') {
           next({
             name: 'dashboard'
           })
@@ -20,7 +20,7 @@ export default function setupUserLoginInfoGuard (router: Router) {
       } else {
         try {
           await userStore.info()
-          if (to.name === 'login') {
+          if (to.name === 'Login') {
             next({
               name: 'dashboard'
             })
@@ -34,13 +34,13 @@ export default function setupUserLoginInfoGuard (router: Router) {
             ...to.query
           }
           next({
-            name: 'login',
+            name: 'Login',
             query
           })
         }
       }
     } else {
-      if (to.name === 'login') {
+      if (to.name === 'Login') {
         next()
         return
       }
@@ -49,7 +49,7 @@ export default function setupUserLoginInfoGuard (router: Router) {
         ...to.query
       }
       next({
-        name: 'login',
+        name: 'Login',
         query
       })
     }
