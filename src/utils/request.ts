@@ -19,6 +19,9 @@ class Request {
     this.axiosInstance.interceptors.response.use(response => {
       const data: ApiResponse<any> = response.data
       if (response.status !== 200) {
+        Message.error({
+          content: '服务器连接失败'
+        })
         return Promise.reject(data)
       }
       if (data.code !== 0) {
@@ -28,6 +31,11 @@ class Request {
         return Promise.reject(data.msg)
       }
       return data.data
+    }, error => {
+      console.error('Request error:', error)
+      Message.error({
+        content: '服务器连接失败'
+      })
     })
   }
 

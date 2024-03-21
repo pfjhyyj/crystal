@@ -27,7 +27,7 @@ import UserCard from './components/UserCard.vue'
 
 <script lang="ts">
 export default {
-  name: 'MySetting'
+  name: 'MySetting',
 }
 </script>
 

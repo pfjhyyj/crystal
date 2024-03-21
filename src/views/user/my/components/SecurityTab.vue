@@ -4,9 +4,7 @@
       <a-list-item>
         <a-list-item-meta>
           <template #avatar>
-            <a-typography-paragraph>
-              登录密码
-            </a-typography-paragraph>
+            <a-typography-paragraph> 登录密码 </a-typography-paragraph>
           </template>
           <template #description>
             <div class="content">

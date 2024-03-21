@@ -2,7 +2,6 @@
   <div class="wrapper">
     <div class="title">登录 Crystal</div>
     <div class="sub-title">登录 Crystal</div>
-    <div class="error-msg">{{ errorMessage }}</div>
     <a-form
         ref="loginForm"
         :model="userInfo"
@@ -64,7 +63,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive } from 'vue'
+import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { Message } from '@arco-design/web-vue'
 import { type ValidatedError } from '@arco-design/web-vue/es/form/interface'
@@ -74,7 +73,6 @@ import useLoading from '@/hooks/loading'
 import type { LoginData } from '@/api/auth'
 
 const router = useRouter()
-const errorMessage = ref('')
 const { loading, setLoading } = useLoading()
 const userStore = useUserStore()
 
@@ -117,7 +115,7 @@ const handleSubmit = async ({
     loginConfig.value.username = rememberPassword ? username : ''
     loginConfig.value.password = rememberPassword ? password : ''
   } catch (err) {
-    errorMessage.value = (err as Error).message
+    console.error(err)
   } finally {
     setLoading(false)
   }

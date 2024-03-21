@@ -27,3 +27,13 @@ interface registerByEmailRequest {
 export async function registerByEmail (data: registerByEmailRequest) {
   return await request.post('/api/auth/registerByEmail', data)
 }
+
+interface updatePasswordRequest {
+  newPassword: string;
+  oldPassword: string;
+  repeatPassword: string;
+}
+
+export async function updatePassword (data: updatePasswordRequest) {
+  return await request.post('/api/my/password', data)
+}

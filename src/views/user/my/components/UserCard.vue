@@ -32,10 +32,9 @@ const userStore = useUserStore()
 const renderData = [
   {
     label: '用户名',
-    value: userStore.username ?? '未设置'
-  }
+    value: userStore.username ?? '未设置',
+  },
 ] as DescData[]
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -13,7 +13,12 @@
       </a-col>
       <a-col
         :span="12"
-        style="display: flex; align-items: center; justify-content: end; height: 32px;"
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: end;
+          height: 32px;
+        "
       >
         <a-tooltip content="刷新">
           <div class="action-icon" @click="fetchData()">
@@ -26,7 +31,7 @@
       row-key="id"
       :loading="loading"
       :pagination="pagination"
-      :columns="(columns as TableColumnData[])"
+      :columns="columns as TableColumnData[]"
       :data="renderData"
       :bordered="false"
       size="medium"
@@ -51,14 +56,18 @@ import { reactive, ref, computed } from 'vue'
 import { type TableColumnData, Modal, Message } from '@arco-design/web-vue'
 import { useQuery } from '@/hooks/query'
 import RoleAssignDialog from './RoleAssignDialog.vue'
-import { deleteUserRole, listUserRoles, type UserRolePageResp } from '@/api/role'
+import {
+  deleteUserRole,
+  listUserRoles,
+  type UserRolePageResp,
+} from '@/api/role'
 
 const { loading, setLoading } = useLoading(true)
 
 const pagination = reactive({
   current: 1,
   pageSize: 20,
-  total: 0
+  total: 0,
 })
 
 const query = useQuery<{
@@ -71,28 +80,26 @@ const columns = computed<TableColumnData[]>(() => [
   {
     title: '序号',
     dataIndex: 'index',
-    slotName: 'index'
+    slotName: 'index',
   },
   {
     title: '角色名',
-    dataIndex: 'roleName'
+    dataIndex: 'roleName',
   },
   {
     title: '操作',
     dataIndex: 'operations',
-    slotName: 'operations'
-  }
+    slotName: 'operations',
+  },
 ])
 
-const fetchData = async (
-  params = { current: 1, pageSize: 20 }
-) => {
+const fetchData = async (params = { current: 1, pageSize: 20 }) => {
   setLoading(true)
   try {
     const res = await listUserRoles({
       current: params.current,
       pageSize: params.pageSize,
-      userId: query.value.id
+      userId: query.value.id,
     })
     renderData.value = res.list
     pagination.current = res.current
@@ -107,13 +114,13 @@ const fetchData = async (
 const onPageChange = (current: number) => {
   void fetchData({
     current,
-    pageSize: pagination.pageSize
+    pageSize: pagination.pageSize,
   })
 }
 
 const handleAdd = () => {
   saveDialog.value?.open({
-    userId: query.value.id
+    userId: query.value.id,
   })
 }
 
@@ -122,17 +129,19 @@ const handleDelete = (record: UserRolePageResp) => {
     title: '警告',
     content: `你正在删除角色${record.roleName}，是否继续？`,
     hideCancel: false,
-    onOk () {
+    onOk() {
       void deleteUserRole({
         userId: query.value.id,
-        roleIds: [record.roleId]
-      }).then(() => {
-        Message.success('删除角色成功')
-        void fetchData()
-      }).catch(() => {
-        Message.error('删除角色失败')
+        roleIds: [record.roleId],
       })
-    }
+        .then(() => {
+          Message.success('删除角色成功')
+          void fetchData()
+        })
+        .catch(() => {
+          Message.error('删除角色失败')
+        })
+    },
   })
 }
 

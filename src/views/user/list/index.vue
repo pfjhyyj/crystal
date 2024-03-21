@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <a-card class="general-card" >
+    <a-card class="general-card">
       <a-row>
         <a-col :flex="1">
           <a-form
@@ -56,39 +56,52 @@
         </a-col>
         <a-col
           :span="12"
-          style="display: flex; align-items: center; justify-content: end; height: 32px;"
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            height: 32px;
+          "
         >
           <a-tooltip content="刷新">
-            <div class="action-icon" @click="search"
-              ><icon-refresh size="18"
-            /></div>
+            <div class="action-icon" @click="search">
+              <icon-refresh size="18" />
+            </div>
           </a-tooltip>
         </a-col>
       </a-row>
       <a-table
-          row-key="id"
-          :loading="loading"
-          :pagination="pagination"
-          :columns="(columns as TableColumnData[])"
-          :data="renderData"
-          :bordered="false"
-          size="medium"
-          @page-change="onPageChange"
+        row-key="id"
+        :loading="loading"
+        :pagination="pagination"
+        :columns="columns as TableColumnData[]"
+        :data="renderData"
+        :bordered="false"
+        size="medium"
+        @page-change="onPageChange"
       >
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
         <template #status="{ record }">
           <a-tag
-            :color="record.status === UserStatusEnum.StatusEnabled ? 'green' : 'red'"
+            :color="
+              record.status === UserStatusEnum.StatusEnabled ? 'green' : 'red'
+            "
           >
             {{
               record.status === UserStatusEnum.StatusEnabled ? '启用' : '禁用'
             }}
           </a-tag>
         </template>
-        <template #operations="{record}">
-          <a-button type="text" size="small" @click="$router.push({name: 'UserDetail', query: {id: record.userId}})">
+        <template #operations="{ record }">
+          <a-button
+            type="text"
+            size="small"
+            @click="
+              $router.push({ name: 'UserDetail', query: { id: record.userId } })
+            "
+          >
             编辑
           </a-button>
         </template>
@@ -101,61 +114,63 @@
 import useLoading from '@/hooks/loading.ts'
 import { reactive, ref, computed } from 'vue'
 import { type TableColumnData } from '@arco-design/web-vue'
-import { getUserList, type DefineListUserPageResponse, UserStatusEnum } from '@/api/user'
+import {
+  getUserList,
+  type DefineListUserPageResponse,
+  UserStatusEnum,
+} from '@/api/user'
 
 const { loading, setLoading } = useLoading(true)
 const pagination = reactive({
   current: 1,
   pageSize: 20,
-  total: 0
+  total: 0,
 })
 const renderData = ref<DefineListUserPageResponse[]>([])
 const columns = computed<TableColumnData[]>(() => [
   {
     title: '序号',
     dataIndex: 'index',
-    slotName: 'index'
+    slotName: 'index',
   },
   {
     title: '用户名',
-    dataIndex: 'username'
+    dataIndex: 'username',
   },
   {
     title: '邮箱',
-    dataIndex: 'email'
+    dataIndex: 'email',
   },
   {
     title: '手机号',
-    dataIndex: 'mobile'
+    dataIndex: 'mobile',
   },
   {
     title: '状态',
     dataIndex: 'status',
-    slotName: 'status'
+    slotName: 'status',
   },
   {
     title: '操作',
     dataIndex: 'operations',
-    slotName: 'operations'
-  }
+    slotName: 'operations',
+  },
 ])
 
 const generateFormModel = () => {
   return {
     name: '',
-    status: ''
+    status: '',
   }
 }
 const formModel = ref(generateFormModel())
 
-const fetchData = async (
-  params = { current: 1, pageSize: 20 }
-) => {
+const fetchData = async (params = { current: 1, pageSize: 20 }) => {
   setLoading(true)
   try {
     const data = await getUserList({
       pageSize: params.pageSize,
-      current: params.current
+      current: params.current,
     })
     renderData.value = data.list
     pagination.current = data.current
@@ -170,7 +185,7 @@ const fetchData = async (
 const onPageChange = (current: number) => {
   void fetchData({
     current,
-    pageSize: pagination.pageSize
+    pageSize: pagination.pageSize,
   })
 }
 
@@ -187,7 +202,7 @@ void fetchData()
 
 <script lang="ts">
 export default {
-  name: 'UserManage'
+  name: 'UserManage',
 }
 </script>
 
