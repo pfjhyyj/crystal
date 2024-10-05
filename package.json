@@ -11,7 +11,7 @@
   "dependencies": {
     "@vue/eslint-config-typescript": "^13.0.0",
     "@vueuse/core": "^10.4.1",
-    "axios": "^1.6.0",
+    "axios": "^1.7.4",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
     "mitt": "^3.0.1",
