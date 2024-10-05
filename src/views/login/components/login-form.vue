@@ -70,7 +70,7 @@ import { type ValidatedError } from '@arco-design/web-vue/es/form/interface'
 import { useStorage } from '@vueuse/core'
 import { useUserStore } from '@/store'
 import useLoading from '@/hooks/loading'
-import type { LoginData } from '@/api/auth'
+import type { LoginRequest } from '@/api/auth'
 
 const router = useRouter()
 const { loading, setLoading } = useLoading()
@@ -99,7 +99,7 @@ const handleSubmit = async ({
   }
   setLoading(true)
   try {
-    await userStore.login(values as LoginData)
+    await userStore.login(values as LoginRequest)
     const { redirect, ...othersQuery } = router.currentRoute.value.query
     void router.push({
       name: redirect as string ?? 'Workplace',

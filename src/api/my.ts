@@ -1,23 +1,22 @@
 import request from '@/utils/request'
 import { type Menu } from './menu'
 
-export interface MyInfoResponse {
-  avatar: string
-  email: string
-  mobile: string
+export interface GetCurrentUserResponse {
   userId: number
   username: string
+  nickname: string
+  avatar: string
 }
 
-export async function getUserInfo () {
-  return await request.get<MyInfoResponse>('/api/my')
+export async function getUserInfo() {
+  return await request.get<GetCurrentUserResponse>('/api/user/current')
 }
 
 interface updateUserInfoReq {
   avatar?: string
 }
 
-export async function updateUserInfo (data: updateUserInfoReq) {
+export async function updateUserInfo(data: updateUserInfoReq) {
   return await request.put('/api/my', data)
 }
 
@@ -27,7 +26,7 @@ interface updatePasswordReq {
   repeatPassword: string
 }
 
-export async function updatePassword (data: updatePasswordReq) {
+export async function updatePassword(data: updatePasswordReq) {
   return await request.put('/api/my/password', data)
 }
 
@@ -35,6 +34,6 @@ export interface GetMyMenuResponse {
   menus: Menu[]
 }
 
-export async function getMenuList (): Promise<GetMyMenuResponse> {
+export async function getMenuList(): Promise<GetMyMenuResponse> {
   return await request.get('/api/my/menus')
 }

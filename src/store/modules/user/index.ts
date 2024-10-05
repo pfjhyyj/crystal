@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import {
   login as userLogin,
   logout as userLogout,
-  type LoginData
+  type LoginRequest,
 } from '@/api/auth'
 import { getUserInfo } from '@/api/my'
 import { setToken, clearToken } from '@/utils/auth'
@@ -16,47 +16,47 @@ const useUserStore = defineStore('user', {
     userId: undefined,
     username: undefined,
     avatar: undefined,
-    unreadMessageCount: 0
+    unreadMessageCount: 0,
   }),
 
   getters: {
-    userInfo (state: UserState): UserState {
+    userInfo(state: UserState): UserState {
       return { ...state }
-    }
+    },
   },
 
   actions: {
     // Set user's information
-    setInfo (partial: Partial<UserState>) {
+    setInfo(partial: Partial<UserState>) {
       this.$patch(partial)
     },
 
     // Reset user's information
-    resetInfo () {
+    resetInfo() {
       this.$reset()
     },
 
     // Get user's information
-    async info () {
+    async info() {
       const res = await getUserInfo()
 
       this.setInfo({
         userId: res.userId,
         username: res.username,
-        avatar: res.avatar
+        avatar: res.avatar,
       })
       void this.getUnreadMessagesCount()
     },
 
-    async getUnreadMessagesCount () {
+    async getUnreadMessagesCount() {
       const res = await getMyMessages()
       this.setInfo({
-        unreadMessageCount: res.unreadMessageCount
+        unreadMessageCount: res.unreadMessageCount,
       })
     },
 
     // Login
-    async login (loginForm: LoginData) {
+    async login(loginForm: LoginRequest) {
       try {
         const res = await userLogin(loginForm)
         setToken(res.accessToken)
@@ -65,7 +65,7 @@ const useUserStore = defineStore('user', {
         throw err
       }
     },
-    logoutCallBack () {
+    logoutCallBack() {
       const appStore = useAppStore()
       this.resetInfo()
       clearToken()
@@ -73,14 +73,14 @@ const useUserStore = defineStore('user', {
       appStore.clearServerMenu()
     },
     // Logout
-    async logout () {
+    async logout() {
       try {
         await userLogout()
       } finally {
         this.logoutCallBack()
       }
-    }
-  }
+    },
+  },
 })
 
 export default useUserStore

@@ -6,9 +6,9 @@ import { getToken } from '@/utils/auth.ts'
 class Request {
   private readonly axiosInstance: AxiosInstance
 
-  constructor (config: AxiosRequestConfig) {
+  constructor(config: AxiosRequestConfig) {
     this.axiosInstance = axios.create(config)
-    this.axiosInstance.interceptors.request.use(config => {
+    this.axiosInstance.interceptors.request.use((config) => {
       const token = getToken()
       if (token != null) {
         config.headers.Authorization = `Bearer ${token}`
@@ -16,70 +16,73 @@ class Request {
       return config
     })
 
-    this.axiosInstance.interceptors.response.use(response => {
-      const data: ApiResponse<any> = response.data
-      if (response.status !== 200) {
+    this.axiosInstance.interceptors.response.use(
+      (response) => {
+        const data: ApiResponse<any> = response.data
+        if (response.status !== 200) {
+          Message.error({
+            content: '服务器连接失败',
+          })
+          return Promise.reject(data)
+        }
+        if (data.code !== 0) {
+          Message.error({
+            content: data.message,
+          })
+          return Promise.reject(data.message)
+        }
+        return data.data
+      },
+      (error) => {
+        console.error('Request error:', error)
         Message.error({
-          content: '服务器连接失败'
+          content: '服务器连接失败',
         })
-        return Promise.reject(data)
-      }
-      if (data.code !== 0) {
-        Message.error({
-          content: data.msg
-        })
-        return Promise.reject(data.msg)
-      }
-      return data.data
-    }, error => {
-      console.error('Request error:', error)
-      Message.error({
-        content: '服务器连接失败'
-      })
-    })
+      },
+    )
   }
 
-  async request<T = any> (config: AxiosRequestConfig): Promise<T> {
+  async request<T = any>(config: AxiosRequestConfig): Promise<T> {
     return await this.axiosInstance(config)
   }
 
-  async get<T = any> (url: string, params?: any): Promise<T> {
+  async get<T = any>(url: string, params?: any): Promise<T> {
     return await this.axiosInstance({
       url,
       method: 'get',
-      params
+      params,
     })
   }
 
-  async post<T = any> (url: string, data?: any): Promise<T> {
+  async post<T = any>(url: string, data?: any): Promise<T> {
     return await this.axiosInstance({
       url,
       method: 'post',
-      data
+      data,
     })
   }
 
-  async put<T = any> (url: string, data?: any): Promise<T> {
+  async put<T = any>(url: string, data?: any): Promise<T> {
     return await this.axiosInstance({
       url,
       method: 'put',
-      data
+      data,
     })
   }
 
-  async patch<T = any> (url: string, data?: any): Promise<T> {
+  async patch<T = any>(url: string, data?: any): Promise<T> {
     return await this.axiosInstance({
       url,
       method: 'patch',
-      data
+      data,
     })
   }
 
-  async delete<T = any> (url: string, data?: any): Promise<T> {
+  async delete<T = any>(url: string, data?: any): Promise<T> {
     return await this.axiosInstance({
       url,
       method: 'delete',
-      data
+      data,
     })
   }
 }

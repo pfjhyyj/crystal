@@ -1,21 +1,21 @@
 import request from '@/utils/request'
 
-export interface LoginData {
+export interface LoginRequest {
   username: string
   password: string
 }
 
-export interface LoginRes {
+export interface LoginResponse {
   accessToken: string
   expireTime: number
 }
 
-export async function login (data: LoginData) {
-  return await request.post<LoginRes>('/api/auth/loginByUsername', data)
+export async function login(data: LoginRequest) {
+  return await request.post<LoginResponse>('/api/auth/login', data)
 }
 
-export async function logout () {
-  return await request.post<LoginRes>('/api/auth/logout')
+export async function logout() {
+  return await request.post<LoginResponse>('/api/auth/logout')
 }
 
 interface registerByEmailRequest {
@@ -24,16 +24,16 @@ interface registerByEmailRequest {
   username: string
 }
 
-export async function registerByEmail (data: registerByEmailRequest) {
+export async function registerByEmail(data: registerByEmailRequest) {
   return await request.post('/api/auth/registerByEmail', data)
 }
 
 interface updatePasswordRequest {
-  newPassword: string;
-  oldPassword: string;
-  repeatPassword: string;
+  newPassword: string
+  oldPassword: string
+  repeatPassword: string
 }
 
-export async function updatePassword (data: updatePasswordRequest) {
+export async function updatePassword(data: updatePasswordRequest) {
   return await request.post('/api/my/password', data)
 }
