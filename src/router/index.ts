@@ -11,31 +11,31 @@ const router: Router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: 'Login'
+      redirect: 'Login',
     },
     {
       path: '/login',
       name: 'Login',
       component: async () => await import('@/views/login/index.vue'),
       meta: {
-        anonymous: true
-      }
+        anonymous: true,
+      },
     },
     {
       path: '/register',
       name: 'Register',
       component: async () => await import('@/views/register/index.vue'),
       meta: {
-        anonymous: true
-      }
+        anonymous: true,
+      },
     },
     ...appRoutes,
     REDIRECT_MAIN,
-    NOT_FOUND_ROUTE
+    NOT_FOUND_ROUTE,
   ],
-  scrollBehavior () {
+  scrollBehavior() {
     return { top: 0 }
-  }
+  },
 })
 
 createRouteGuard(router)

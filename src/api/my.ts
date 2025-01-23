@@ -9,7 +9,7 @@ export interface GetCurrentUserResponse {
 }
 
 export async function getUserInfo() {
-  return await request.get<GetCurrentUserResponse>('/api/user/current')
+  return await request.get<GetCurrentUserResponse>('/api/v1/auth/current')
 }
 
 interface updateUserInfoReq {
@@ -17,7 +17,7 @@ interface updateUserInfoReq {
 }
 
 export async function updateUserInfo(data: updateUserInfoReq) {
-  return await request.put('/api/my', data)
+  return await request.put('/api/v1/my', data)
 }
 
 interface updatePasswordReq {
@@ -27,7 +27,7 @@ interface updatePasswordReq {
 }
 
 export async function updatePassword(data: updatePasswordReq) {
-  return await request.put('/api/my/password', data)
+  return await request.put('/api/v1/my/password', data)
 }
 
 export interface GetMyMenuResponse {
@@ -35,5 +35,5 @@ export interface GetMyMenuResponse {
 }
 
 export async function getMenuList(): Promise<GetMyMenuResponse> {
-  return await request.get('/api/my/menus')
+  return await request.get('/api/v1/my/menus')
 }

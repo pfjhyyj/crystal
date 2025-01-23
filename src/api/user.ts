@@ -12,7 +12,7 @@ export interface DefineListUserPageResponse {
 
 export enum UserStatusEnum {
   StatusEnabled = 1,
-  StatusDisabled = 2
+  StatusDisabled = 2,
 }
 
 export interface UserListReq extends PageRequest {
@@ -21,11 +21,11 @@ export interface UserListReq extends PageRequest {
   status?: UserStatusEnum
 }
 
-export interface UserListResp extends PageResponse<DefineListUserPageResponse> {
-}
+export interface UserListResp
+  extends PageResponse<DefineListUserPageResponse> {}
 
-export async function getUserList (data: UserListReq): Promise<UserListResp> {
-  return await request.get<UserListResp>('/api/users', data)
+export async function getUserList(data: UserListReq): Promise<UserListResp> {
+  return await request.get<UserListResp>('/api/v1/users', data)
 }
 
 export interface UserDetailResp {
@@ -37,6 +37,6 @@ export interface UserDetailResp {
   username?: string
 }
 
-export async function getUserDetail (userId: numberic): Promise<UserDetailResp> {
-  return await request.get<UserDetailResp>(`/api/users/${userId}`)
+export async function getUserDetail(userId: numberic): Promise<UserDetailResp> {
+  return await request.get<UserDetailResp>(`/api/v1/users/${userId}`)
 }

@@ -5,15 +5,15 @@ export interface ApiResponse<T> {
 }
 
 export interface PageRequest {
-  current: number
-  pageSize: number
+  page: number
+  size: number
 }
 
 export interface PageResponse<T> {
-  current: number
-  pageSize: number
+  page: number
+  size: number
   total: number
-  list: T[]
+  data: T[]
 }
 
 export type numberic = number | string

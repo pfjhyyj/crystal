@@ -26,11 +26,11 @@ export interface TenantCreateResp {
 }
 
 export async function createTenant (data: TenantCreateReq): Promise<TenantCreateResp> {
-  return await request.post<TenantCreateResp>('/api/tenants', data)
+  return await request.post<TenantCreateResp>('/api/v1/tenants', data)
 }
 
 export async function getTenant (tenantId: numberic): Promise<Tenant> {
-  return await request.get<Tenant>(`/api/tenants/${tenantId}`)
+  return await request.get<Tenant>(`/api/v1/tenants/${tenantId}`)
 }
 
 export interface TenantUpdateReq {
@@ -41,11 +41,11 @@ export interface TenantUpdateReq {
 }
 
 export async function updateTenant (tenantId: numberic, data: TenantUpdateReq): Promise<void> {
-  await request.put(`/api/tenants/${tenantId}`, data)
+  await request.put(`/api/v1/tenants/${tenantId}`, data)
 }
 
 export async function deleteTenant (tenantId: numberic): Promise<void> {
-  await request.delete(`/api/tenants/${tenantId}`)
+  await request.delete(`/api/v1/tenants/${tenantId}`)
 }
 
 export interface TenantListReq extends PageRequest {
@@ -58,5 +58,5 @@ export interface TenantListResp extends PageResponse<Tenant> {
 }
 
 export async function getTenantList (data?: TenantListReq): Promise<TenantListResp> {
-  return await request.get<TenantListResp>('/api/tenants', data)
+  return await request.get<TenantListResp>('/api/v1/tenants', data)
 }

@@ -72,11 +72,11 @@ const getMessageList = () => {
 
 setupMock({
   setup: () => {
-    Mock.mock(/\/api\/message\/list/, () => {
+    Mock.mock(/\/api/v1\/message\/list/, () => {
       return successResponseWrap(getMessageList())
     })
 
-    Mock.mock(/\/api\/message\/read/, (params: { body: string }) => {
+    Mock.mock(/\/api/v1\/message\/read/, (params: { body: string }) => {
       const { ids } = JSON.parse(params.body)
       haveReadIds.push(...(ids ?? []))
       return successResponseWrap(true)

@@ -20,30 +20,30 @@ const useAppStore = defineStore('app', {
     device: 'desktop',
     tabBar: true,
     menuFromServer: false,
-    serverMenu: []
+    serverMenu: [],
   }),
 
   getters: {
-    appCurrentSetting (state: AppState): AppState {
+    appCurrentSetting(state: AppState): AppState {
       return { ...state }
     },
-    appDevice (state: AppState) {
+    appDevice(state: AppState) {
       return state.device
     },
-    appAsyncMenus (state: AppState): RouteRecordNormalized[] {
+    appAsyncMenus(state: AppState): RouteRecordNormalized[] {
       return state.serverMenu as unknown as RouteRecordNormalized[]
-    }
+    },
   },
 
   actions: {
     // Update app settings
-    updateSettings (partial: Partial<AppState>) {
+    updateSettings(partial: Partial<AppState>) {
       // @ts-expect-error-next-line
       this.$patch(partial)
     },
 
     // Change theme color
-    toggleTheme (dark: boolean) {
+    toggleTheme(dark: boolean) {
       if (dark) {
         this.theme = 'dark'
         document.body.setAttribute('arco-theme', 'dark')
@@ -52,13 +52,13 @@ const useAppStore = defineStore('app', {
         document.body.removeAttribute('arco-theme')
       }
     },
-    toggleDevice (device: string) {
+    toggleDevice(device: string) {
       this.device = device
     },
-    toggleMenu (value: boolean) {
+    toggleMenu(value: boolean) {
       this.hideMenu = value
     },
-    async fetchServerMenuConfig () {
+    async fetchServerMenuConfig() {
       try {
         const res = await getMenuList()
         this.serverMenu = res.menus
@@ -66,14 +66,14 @@ const useAppStore = defineStore('app', {
         Notification.error({
           id: 'menuNotice',
           content: 'error',
-          closable: true
+          closable: true,
         })
       }
     },
-    clearServerMenu () {
+    clearServerMenu() {
       this.serverMenu = []
-    }
-  }
+    },
+  },
 })
 
 export default useAppStore

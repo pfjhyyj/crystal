@@ -3,7 +3,7 @@ import request from '@/utils/request'
 export enum MenuType {
   MENU_CATEGORY = 1,
   MENU_ITEM = 2,
-  MENU_BUTTON = 3
+  MENU_BUTTON = 3,
 }
 
 export interface MenuPageResponse {
@@ -11,8 +11,8 @@ export interface MenuPageResponse {
   locale: string
 }
 
-export async function listMenu (): Promise<Menu[]> {
-  return await request.get('/api/menus')
+export async function listMenu(): Promise<Menu[]> {
+  return await request.get('/api/v1/menus')
 }
 
 interface CreateMenuRequest {
@@ -25,8 +25,8 @@ interface CreateMenuRequest {
   path?: string
 }
 
-export async function createMenu (data: CreateMenuRequest) {
-  return await request.post('/api/menus', data)
+export async function createMenu(data: CreateMenuRequest) {
+  return await request.post('/api/v1/menus', data)
 }
 
 interface UpdateMenuRequest {
@@ -39,12 +39,12 @@ interface UpdateMenuRequest {
   path?: string
 }
 
-export async function updateMenu (menuId: number, data: UpdateMenuRequest) {
-  return await request.put(`/api/menus/${menuId}`, data)
+export async function updateMenu(menuId: number, data: UpdateMenuRequest) {
+  return await request.put(`/api/v1/menus/${menuId}`, data)
 }
 
-export async function deleteMenu (menuId: number) {
-  return await request.delete(`/api/menus/${menuId}`)
+export async function deleteMenu(menuId: number) {
+  return await request.delete(`/api/v1/menus/${menuId}`)
 }
 
 export interface Menu {

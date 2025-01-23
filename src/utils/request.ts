@@ -2,6 +2,7 @@ import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import { Message } from '@arco-design/web-vue'
 import { type ApiResponse } from '@/api/type'
 import { getToken } from '@/utils/auth.ts'
+import router from '@/router'
 
 class Request {
   private readonly axiosInstance: AxiosInstance
@@ -26,6 +27,16 @@ class Request {
           return Promise.reject(data)
         }
         if (data.code !== 0) {
+          if (data.code === 20002) {
+            Message.error({
+              content: '登录已过期，请重新登录',
+            })
+            setTimeout(() => {
+              router.replace('/login')
+            }, 2000)
+            return Promise.reject(data.message)
+          }
+
           Message.error({
             content: data.message,
           })
@@ -38,6 +49,7 @@ class Request {
         Message.error({
           content: '服务器连接失败',
         })
+        return Promise.reject(error)
       },
     )
   }

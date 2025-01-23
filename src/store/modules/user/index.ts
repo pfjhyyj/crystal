@@ -45,7 +45,7 @@ const useUserStore = defineStore('user', {
         username: res.username,
         avatar: res.avatar,
       })
-      void this.getUnreadMessagesCount()
+      // void this.getUnreadMessagesCount()
     },
 
     async getUnreadMessagesCount() {

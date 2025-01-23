@@ -12,14 +12,14 @@ export interface MessageRecord {
 }
 export type MessageListType = MessageRecord[]
 
-export async function queryMessageList () {
-  return await request.get<MessageListType>('/api/message/list')
+export async function queryMessageList() {
+  return await request.get<MessageListType>('/api/v1/message/list')
 }
 
 interface MessageStatus {
   ids: number[]
 }
 
-export async function setMessageStatus (data: MessageStatus) {
-  return await request.post<MessageListType>('/api/message/status', data)
+export async function setMessageStatus(data: MessageStatus) {
+  return await request.post<MessageListType>('/api/v1/message/status', data)
 }

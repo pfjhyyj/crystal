@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <a-card class="general-card" >
+    <a-card class="general-card">
       <a-row>
         <a-col :flex="1">
           <a-form
@@ -11,14 +11,8 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item
-                  field="name"
-                  label="目标资源"
-                >
-                  <a-input
-                    v-model="formModel.target"
-                    @press-enter="search"
-                  />
+                <a-form-item field="name" label="目标资源">
+                  <a-input v-model="formModel.object" @press-enter="search" />
                 </a-form-item>
               </a-col>
             </a-row>
@@ -56,33 +50,42 @@
         </a-col>
         <a-col
           :span="12"
-          style="display: flex; align-items: center; justify-content: end; height: 32px;"
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            height: 32px;
+          "
         >
           <a-tooltip content="刷新">
-            <div class="action-icon" @click="search"
-              ><icon-refresh size="18"
-            /></div>
+            <div class="action-icon" @click="search">
+              <icon-refresh size="18" />
+            </div>
           </a-tooltip>
         </a-col>
       </a-row>
       <a-table
-          row-key="id"
-          :loading="loading"
-          :pagination="pagination"
-          :columns="(columns as TableColumnData[])"
-          :data="renderData"
-          :bordered="false"
-          size="medium"
-          @page-change="onPageChange"
+        row-key="id"
+        :loading="loading"
+        :pagination="pagination"
+        :columns="columns"
+        :data="renderData"
+        :bordered="false"
+        size="medium"
+        @page-change="onPageChange"
       >
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
-        <template #operations="{record}">
-          <a-button type="text" size="small" @click="handleEditTenant(record)">
+        <template #operations="{ record }">
+          <a-button type="text" size="small" @click="handleEdit(record)">
             编辑
           </a-button>
-          <a-button type="text" size="small" @click="handleDeleteTenant(record)">
+          <a-button
+            type="text"
+            size="small"
+            @click="handleDeleteTenant(record)"
+          >
             删除
           </a-button>
         </template>
@@ -98,7 +101,12 @@ import useLoading from '@/hooks/loading.ts'
 import { reactive, ref, computed } from 'vue'
 import { type TableColumnData } from '@arco-design/web-vue'
 import { Message, Modal } from '@arco-design/web-vue'
-import { deletePermission, listPermission, type Permission, type PermissionPageResp } from '@/api/permission'
+import {
+  deletePermission,
+  listPermission,
+  type Permission,
+  type PermissionPageResp,
+} from '@/api/permission'
 
 const saveDialog = ref<typeof PermissionSaveDialog>()
 
@@ -106,52 +114,50 @@ const { loading, setLoading } = useLoading(true)
 const pagination = reactive({
   current: 1,
   pageSize: 20,
-  total: 0
+  total: 0,
 })
 const renderData = ref<PermissionPageResp[]>([])
 const columns = computed<TableColumnData[]>(() => [
   {
     title: '序号',
     dataIndex: 'index',
-    slotName: 'index'
+    slotName: 'index',
   },
   {
     title: '名称',
-    dataIndex: 'name'
+    dataIndex: 'name',
   },
   {
     title: '目标资源',
-    dataIndex: 'target'
+    dataIndex: 'object',
   },
   {
     title: '权限动作',
-    dataIndex: 'action'
+    dataIndex: 'action',
   },
   {
     title: '操作',
     dataIndex: 'operations',
-    slotName: 'operations'
-  }
+    slotName: 'operations',
+  },
 ])
 
 const generateFormModel = () => {
   return {
-    target: ''
+    object: '',
   }
 }
 const formModel = ref(generateFormModel())
 
-const fetchData = async (
-  params = { current: 1, pageSize: 20 }
-) => {
+const fetchData = async (params = { page: 1, size: 20 }) => {
   setLoading(true)
   try {
     const data = await listPermission({
       ...params,
-      ...formModel.value
+      ...formModel.value,
     })
-    renderData.value = data.list
-    pagination.current = data.current
+    renderData.value = data.data
+    pagination.current = data.page
     pagination.total = data.total
   } catch (err) {
     console.log(err)
@@ -162,8 +168,8 @@ const fetchData = async (
 
 const onPageChange = (current: number) => {
   void fetchData({
-    current,
-    pageSize: pagination.pageSize
+    page: current,
+    size: pagination.pageSize,
   })
 }
 
@@ -179,7 +185,7 @@ const handleAdd = () => {
   saveDialog.value?.open()
 }
 
-const handleEditTenant = (data: Permission) => {
+const handleEdit = (data: Permission) => {
   saveDialog.value?.open(data)
 }
 
@@ -188,15 +194,16 @@ const handleDeleteTenant = (data: Permission) => {
     title: '警告',
     content: `你正在删除${data.name}，删除后不可恢复，是否继续？`,
     hideCancel: false,
-    onOk () {
+    onOk() {
       void deletePermission(data.permissionId)
         .then(() => {
           Message.success('删除成功')
           void fetchData()
-        }).catch(() => {
+        })
+        .catch(() => {
           Message.error('删除失败')
         })
-    }
+    },
   })
 }
 
@@ -205,7 +212,7 @@ void fetchData()
 
 <script lang="ts">
 export default {
-  name: 'PermissionManage'
+  name: 'PermissionManage',
 }
 </script>
 

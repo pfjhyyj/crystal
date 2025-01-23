@@ -11,11 +11,11 @@ export interface LoginResponse {
 }
 
 export async function login(data: LoginRequest) {
-  return await request.post<LoginResponse>('/api/auth/login', data)
+  return await request.post<LoginResponse>('/api/v1/auth/login', data)
 }
 
 export async function logout() {
-  return await request.post<LoginResponse>('/api/auth/logout')
+  return await request.post<LoginResponse>('/api/v1/auth/logout')
 }
 
 interface registerByEmailRequest {
@@ -25,7 +25,7 @@ interface registerByEmailRequest {
 }
 
 export async function registerByEmail(data: registerByEmailRequest) {
-  return await request.post('/api/auth/registerByEmail', data)
+  return await request.post('/api/v1/auth/registerByEmail', data)
 }
 
 interface updatePasswordRequest {
@@ -35,5 +35,5 @@ interface updatePasswordRequest {
 }
 
 export async function updatePassword(data: updatePasswordRequest) {
-  return await request.post('/api/my/password', data)
+  return await request.post('/api/v1/my/password', data)
 }

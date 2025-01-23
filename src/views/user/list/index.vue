@@ -46,12 +46,12 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <!-- <a-button type="primary" @click="handleAdd">
+            <a-button type="primary" @click="handleAdd">
               <template #icon>
                 <icon-plus />
               </template>
-              新建租户
-            </a-button> -->
+              新建用户
+            </a-button>
           </a-space>
         </a-col>
         <a-col
@@ -74,7 +74,7 @@
         row-key="id"
         :loading="loading"
         :pagination="pagination"
-        :columns="columns as TableColumnData[]"
+        :columns="columns"
         :data="renderData"
         :bordered="false"
         size="medium"
@@ -145,11 +145,11 @@ const columns = computed<TableColumnData[]>(() => [
     title: '手机号',
     dataIndex: 'mobile',
   },
-  {
-    title: '状态',
-    dataIndex: 'status',
-    slotName: 'status',
-  },
+  // {
+  //   title: '状态',
+  //   dataIndex: 'status',
+  //   slotName: 'status',
+  // },
   {
     title: '操作',
     dataIndex: 'operations',
@@ -165,15 +165,15 @@ const generateFormModel = () => {
 }
 const formModel = ref(generateFormModel())
 
-const fetchData = async (params = { current: 1, pageSize: 20 }) => {
+const fetchData = async (params = { page: 1, size: 20 }) => {
   setLoading(true)
   try {
     const data = await getUserList({
-      pageSize: params.pageSize,
-      current: params.current,
+      page: params.page,
+      size: params.size,
     })
-    renderData.value = data.list
-    pagination.current = data.current
+    renderData.value = data.data
+    pagination.current = data.page
     pagination.total = data.total
   } catch (err) {
     console.log(err)
@@ -184,8 +184,8 @@ const fetchData = async (params = { current: 1, pageSize: 20 }) => {
 
 const onPageChange = (current: number) => {
   void fetchData({
-    current,
-    pageSize: pagination.pageSize,
+    page: current,
+    size: pagination.pageSize,
   })
 }
 
@@ -196,6 +196,8 @@ const search = () => {
 const reset = () => {
   formModel.value = generateFormModel()
 }
+
+const handleAdd = () => {}
 
 void fetchData()
 </script>

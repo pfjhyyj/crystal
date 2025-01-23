@@ -3,7 +3,6 @@ import { join } from 'path'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import { ArcoResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default ({ mode }): UserConfig => {
@@ -13,25 +12,25 @@ export default ({ mode }): UserConfig => {
     plugins: [
       vue(),
       AutoImport({
-        resolvers: []
+        resolvers: [],
       }),
       Components({
-        resolvers: []
-      })
+        resolvers: [],
+      }),
     ],
     server: {
       proxy: {
-        '/api': {
+        '/api/v1': {
           target: process.env.VITE_API_URL,
           changeOrigin: true,
-          secure: true
-        }
-      }
+          secure: true,
+        },
+      },
     },
     resolve: {
       alias: {
-        '@': join(__dirname, 'src')
-      }
-    }
+        '@': join(__dirname, 'src'),
+      },
+    },
   })
 }

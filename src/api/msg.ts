@@ -17,26 +17,28 @@ interface GetMessagesRequest extends PageRequest {
 
 export interface GetMessagesResponse extends PageResponse<Message> {}
 
-export async function getMessages (data: GetMessagesRequest): Promise<GetMessagesResponse> {
-  return await request.get<GetMessagesResponse>('/api/messages', data)
+export async function getMessages(
+  data: GetMessagesRequest,
+): Promise<GetMessagesResponse> {
+  return await request.get<GetMessagesResponse>('/api/v1/messages', data)
 }
 
-export async function readMessage (messageId: numberic) {
-  return await request.put(`/api/messages/${messageId}/read`)
+export async function readMessage(messageId: numberic) {
+  return await request.put(`/api/v1/messages/${messageId}/read`)
 }
 
 interface BatchReadMessageRequest {
   messageIds: number[]
 }
 
-export async function batchReadMessage (data: BatchReadMessageRequest) {
-  return await request.put('/api/messages/batchRead', data)
+export async function batchReadMessage(data: BatchReadMessageRequest) {
+  return await request.put('/api/v1/messages/batchRead', data)
 }
 
 export interface GetMyMessagesResponse {
   unreadMessageCount: number
 }
 
-export async function getMyMessages (): Promise<GetMyMessagesResponse> {
-  return await request.get('/api/my/messages')
+export async function getMyMessages(): Promise<GetMyMessagesResponse> {
+  return await request.get('/api/v1/my/messages')
 }
