@@ -44,7 +44,7 @@
           </a-button>
         </a-tooltip>
       </li>
-      <li>
+      <!-- <li>
         <a-tooltip content="消息通知">
           <div class="message-box-trigger">
             <a-badge :count="unreadMessageCount" dot>
@@ -70,7 +70,7 @@
             <message-box />
           </template>
         </a-popover>
-      </li>
+      </li> -->
       <li>
         <a-tooltip
           :content="
