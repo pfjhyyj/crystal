@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv, type UserConfig } from 'vite'
 import { join } from 'path'
 import vue from '@vitejs/plugin-vue'
+import svgLoader from 'vite-svg-loader'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 
@@ -11,6 +12,7 @@ export default ({ mode }): UserConfig => {
   return defineConfig({
     plugins: [
       vue(),
+      svgLoader(),
       AutoImport({
         resolvers: [],
       }),

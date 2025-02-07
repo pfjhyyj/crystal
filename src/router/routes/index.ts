@@ -10,11 +10,13 @@ function formatModules(_modules: any, result: RouteRecordNormalized[]) {
   Object.keys(_modules).forEach((key) => {
     const defaultModule = _modules[key].default
     if (isEmptyObject(defaultModule)) return
-    const moduleList = Array.isArray(defaultModule)
+    let moduleList = Array.isArray(defaultModule)
       ? [...defaultModule]
       : [defaultModule]
+    moduleList = moduleList.sort((a, b) => (a.meta.order || 0) - (b.meta.order || 0))
     result.push(...moduleList)
   })
+  result = result.sort((a, b) => (a.meta.order as number || 0) - (b.meta.order as number || 0))
   return result
 }
 
