@@ -65,9 +65,9 @@
       <template
         v-for="(slotKey, slotIndex) in tableSlots"
         :key="slotIndex"
-        v-slot:[slotKey]
+        v-slot:[slotKey]="slotProps"
       >
-        <slot :name="slotKey"></slot>
+        <slot :name="slotKey" :record="slotProps.record"></slot>
       </template>
     </a-table>
   </div>
@@ -166,8 +166,8 @@ const loadData = async (current: number = 1, pageSize: number = 10) => {
   setLoading(true)
   try {
     const data = await props.fetchData(current, pageSize)
-    renderData.value = data.list
-    pagination.current = data.current
+    renderData.value = data.data
+    pagination.current = data.page
     pagination.total = data.total
   } catch (err) {
     console.log(err)

@@ -24,7 +24,8 @@ const ARTICLE: AppRouteRecordRaw = {
       name: 'ArticleDetail',
       component: async () => await import('@/views/article/detail/index.vue'),
       meta: {
-        locale: '文章详情'
+        locale: '文章详情',
+        hideInMenu: true
       }
     }
   ]

@@ -58,13 +58,13 @@
           </a-button>
         </template>
         <template #column-status="{ record }">
-          <!-- <a-tag
-            :color="record.status === TenantStatus.ENABLE ? 'green' : 'red'"
+          <a-tag
+            :color="record.status === 1 ? 'green' : 'red'"
           >
             {{
-              record.status === TenantStatus.ENABLE ? '启用' : '禁用'
+              record.status === 1 ? '启用' : '禁用'
             }}
-          </a-tag> -->
+          </a-tag>
         </template>
         <template #column-operations="{ record }">
           <a-button type="text" size="small" @click="handleEdit(record)">
@@ -105,17 +105,18 @@ const columns = computed<TableColumnData[]>(() => [
   },
   {
     title: '更新时间',
-    dataIndex: 'updateTime'
+    dataIndex: 'updatedAt',
+    slotName: 'updatedAt'
   },
   {
     title: '状态',
     dataIndex: 'status',
-    slotName: 'status'
+    slotName: 'column-status'
   },
   {
     title: '操作',
     dataIndex: 'operations',
-    slotName: 'operations'
+    slotName: 'column-operations'
   }
 ])
 
@@ -130,6 +131,9 @@ const fetchData = async (current: number, pageSize: number) => {
   return await pageArticle({
     page: current,
     size: pageSize,
+  }).then((res) => {
+    console.log(res)
+    return res;
   })
 }
 

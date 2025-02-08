@@ -32,7 +32,7 @@ export async function deleteArticle(articleId: numberic): Promise<boolean> {
 export interface GetArticleDetailResponse {
   articleId: number;
   category?: null | string;
-  content?: null | string;
+  content: string;
   status: number;
   tag?: null | string;
   title: string;
